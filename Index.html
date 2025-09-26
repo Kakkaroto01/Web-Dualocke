@@ -3,144 +3,391 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego de Cartas Pokémon</title>
+    <title>Duallocke Pokemon</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        * {
             margin: 0;
-            padding: 20px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f0f8ff"/><circle cx="20" cy="20" r="3" fill="%23ffd700" opacity="0.3"/><circle cx="50" cy="50" r="4" fill="%23ff6b6b" opacity="0.3"/><circle cx="80" cy="20" r="2" fill="%234ecdc4" opacity="0.3"/></svg>');
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1511556820780-d912e42b4980?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+        }
+
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 15px;
             padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+            border: 2px solid #ffcb05;
         }
-        .header {
-            text-align: center;
-            color: #e74c3c;
-            border-bottom: 2px solid #e74c3c;
-            padding-bottom: 10px;
-        }
-        .player-info {
-            background: #ecf0f1;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        .btn {
-            background: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px;
-        }
-        .btn:hover {
-            background: #2980b9;
-        }
-        .btn-success {
-            background: #27ae60;
-        }
-        .btn-success:hover {
-            background: #229954;
-        }
-        .btn-danger {
-            background: #e74c3c;
-        }
-        .btn-danger:hover {
-            background: #c0392b;
-        }
-        .inventory-section {
-            margin-top: 20px;
-        }
-        .item {
-            background: #f8f9fa;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
-            border-left: 4px solid #3498db;
-        }
-        .login-form {
-            text-align: center;
-            margin: 20px 0;
-        }
-        .login-form input {
-            padding: 10px;
-            margin: 5px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .shop-item {
+
+        header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #e8f5e8;
+            padding: 15px 0;
+            border-bottom: 2px solid #ffcb05;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 24px;
+            color: #ffcb05;
+            text-shadow: 0 0 10px rgba(255, 203, 5, 0.7);
+            letter-spacing: 1px;
+        }
+
+        .coins {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffde59;
+        }
+
+        .coins img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
             padding: 10px;
-            margin: 5px 0;
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 10px;
+            border: 1px solid #ffcb05;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #ddd;
+            font-size: 18px;
+            padding: 10px 20px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .nav-btn:hover {
+            color: #ffcb05;
+            text-decoration: underline;
+        }
+
+        .nav-btn.active {
+            color: #ffcb05;
+            text-decoration: underline;
+        }
+
+        .section {
+            display: none;
+            padding: 20px;
+            min-height: 400px;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-family: 'Press Start 2P', cursive;
+            color: #ffcb05;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-shadow: 0 0 5px rgba(255, 203, 5, 0.5);
+        }
+
+        .inventory-types {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .inventory-type-btn {
+            background: rgba(50, 50, 50, 0.7);
+            border: 1px solid #ffcb05;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .inventory-type-btn.active {
+            background: #ffcb05;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .item-card {
+            background: rgba(40, 40, 40, 0.9);
+            border: 2px solid #ffcb05;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 203, 5, 0.3);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 150px;
+            background: #333;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: #ffcb05;
+            border: 1px solid #555;
+        }
+
+        .item-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .item-quantity {
+            color: #ffcb05;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .item-action {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 8px 15px;
             border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .item-action:hover {
+            background: #219653;
+        }
+
+        .item-action.sobre {
+            background: #3498db;
+        }
+
+        .item-action.sobre:hover {
+            background: #2980b9;
+        }
+
+        .empty-message {
+            text-align: center;
+            font-size: 18px;
+            color: #ffcb05;
+            padding: 40px;
+            font-style: italic;
+        }
+
+        .login-section {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .login-title {
+            font-family: 'Press Start 2P', cursive;
+            color: #ffcb05;
+            margin-bottom: 30px;
+            font-size: 28px;
+            text-shadow: 0 0 10px rgba(255, 203, 5, 0.7);
+        }
+
+        .login-form {
+            background: rgba(30, 30, 30, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #ffcb05;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 2px solid #555;
+            background: #222;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .login-btn {
+            background: #ffcb05;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #ffd700;
+        }
+
+        .player-info {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        .player-name {
+            color: #ffcb05;
+            font-weight: bold;
+        }
+
+        @media (max-width: 1000px) {
+            .items-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .items-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .nav-bar {
+                flex-wrap: wrap;
+            }
+            
+            .coins {
+                font-size: 16px;
+            }
+            
+            .coins img {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>🎮 Juego de Cartas Pokémon</h1>
-        </div>
-
-        <div id="login-section">
+        <!-- Sección de Login -->
+        <div id="login-section" class="login-section">
             <div class="login-form">
-                <h3>Ingrese su nombre</h3>
-                <input type="text" id="player-name" placeholder="Nombre del jugador">
-                <button class="btn" onclick="login()">Iniciar Sesión</button>
+                <img src="https://fontmeme.com/temporary/eef57ca971449a9b9be8269f9210cede.png" alt="Duallocke Pokemon" class="logo-img">
+                <h1 class="login-title">DUALLOCKE POKEMON</h1>
+                <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
+                <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
         </div>
 
+        <!-- Sección Principal del Juego -->
         <div id="game-section" style="display: none;">
+            <header>
+                <div class="logo">DUALLOCKE POKEMON</div>
+                <div class="coins">
+                    <img src="https://static.wikia.nocookie.net/pokemongohelp/images/9/99/Pokecoin1.png/revision/latest?cb=20160923165335" alt="Pokecoin">
+                    <span id="monedas-count">0</span>
+                </div>
+            </header>
+
             <div class="player-info">
-                <h2 id="player-name-display">Jugador: </h2>
-                <p>Monedas: <span id="monedas-count">0</span></p>
+                <p>Bienvenido, <span class="player-name" id="player-name-display"></span></p>
             </div>
 
-            <div class="actions">
-                <button class="btn btn-success" onclick="abrirSobre()">Abrir Sobre</button>
-                <button class="btn" onclick="mostrarTienda()">Ver Tienda</button>
+            <div class="nav-bar">
+                <button class="nav-btn active" data-target="inventario">Inventario📖</button>
+                <button class="nav-btn" data-target="tienda">Tienda🛒</button>
             </div>
 
-            <div class="inventory-section">
-                <h3>Inventario</h3>
-                <div id="inventario-display"></div>
+            <!-- Sección de Inventario -->
+            <div id="inventario" class="section active">
+                <h2 class="section-title">INVENTARIO</h2>
+                
+                <div class="inventory-types">
+                    <button class="inventory-type-btn active" data-type="cartas">Cartas</button>
+                    <button class="inventory-type-btn" data-type="sobres">Sobres</button>
+                    <button class="inventory-type-btn" data-type="objetos">Objetos</button>
+                </div>
+                
+                <div id="inventario-content"></div>
             </div>
 
-            <div id="tienda-section" style="display: none;">
-                <h3>Tienda</h3>
-                <div id="tienda-items"></div>
-                <button class="btn" onclick="cerrarTienda()">Cerrar Tienda</button>
+            <!-- Sección de Tienda -->
+            <div id="tienda" class="section">
+                <h2 class="section-title">TIENDA</h2>
+                <div id="tienda-content" class="items-grid">
+                    <!-- Los items de la tienda se generarán aquí -->
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Inicializar datos
+        // Datos iniciales
         const cartas = [
-            { id: 1, nombre: "Carta Común 1", tipo: "comun", descripcion: "Pokémon de tipo Fuego" },
-            { id: 2, nombre: "Carta Común 2", tipo: "comun", descripcion: "Pokémon de tipo Agua" },
-            { id: 3, nombre: "Carta Común 3", tipo: "comun", descripcion: "Pokémon de tipo Planta" },
-            { id: 4, nombre: "Carta Común 4", tipo: "comun", descripcion: "Pokémon de tipo Eléctrico" },
-            { id: 5, nombre: "Carta Común 5", tipo: "comun", descripcion: "Pokémon de tipo Psíquico" },
-            { id: 6, nombre: "Carta Rara 1", tipo: "rara", descripcion: "Pokémon Legendario" },
-            { id: 7, nombre: "Carta Rara 2", tipo: "rara", descripcion: "Pokémon Evolucionado" },
-            { id: 8, nombre: "Carta Rara 3", tipo: "rara", descripcion: "Pokémon Mítico" }
+            { id: 1, nombre: "Pikachu", tipo: "comun", descripcion: "Pokémon de tipo Eléctrico" },
+            { id: 2, nombre: "Charmander", tipo: "comun", descripcion: "Pokémon de tipo Fuego" },
+            { id: 3, nombre: "Bulbasaur", tipo: "comun", descripcion: "Pokémon de tipo Planta" },
+            { id: 4, nombre: "Squirtle", tipo: "comun", descripcion: "Pokémon de tipo Agua" },
+            { id: 5, nombre: "Jigglypuff", tipo: "comun", descripcion: "Pokémon de tipo Normal" },
+            { id: 6, nombre: "Mewtwo", tipo: "rara", descripcion: "Pokémon Legendario Psíquico" },
+            { id: 7, nombre: "Charizard", tipo: "rara", descripcion: "Pokémon de tipo Fuego/Volador" },
+            { id: 8, nombre: "Dragonite", tipo: "rara", descripcion: "Pokémon de tipo Dragón/Volador" }
         ];
 
         const sobres = [
-            { id: 1, nombre: "Sobre Básico", precio: 50 },
-            { id: 2, nombre: "Sobre Especial", precio: 100 }
+            { id: 1, nombre: "Sobre Común", precio: 50, tipo: "comun" },
+            { id: 2, nombre: "Sobre Especial", precio: 100, tipo: "especial" }
         ];
 
         const objetos = [
@@ -156,7 +403,7 @@
         function login() {
             const nombre = document.getElementById('player-name').value.trim();
             if (!nombre) {
-                alert('Por favor ingrese un nombre');
+                alert('Por favor ingresa tu nombre de entrenador');
                 return;
             }
 
@@ -176,9 +423,9 @@
             document.getElementById('login-section').style.display = 'none';
             document.getElementById('game-section').style.display = 'block';
             
-            document.getElementById('player-name-display').textContent = `Jugador: ${jugadorActual.nombre}`;
+            document.getElementById('player-name-display').textContent = jugadorActual.nombre;
             actualizarMonedas();
-            mostrarInventario();
+            mostrarInventario('cartas');
         }
 
         // Guardar jugador en localStorage
@@ -186,30 +433,128 @@
             localStorage.setItem('jugador_' + jugadorActual.nombre, JSON.stringify(jugadorActual));
         }
 
-        // Abrir sobre - genera cartas aleatorias
-        function abrirSobre() {
+        // Actualizar monedas en pantalla
+        function actualizarMonedas() {
+            document.getElementById('monedas-count').textContent = jugadorActual.monedas;
+        }
+
+        // Navegación entre secciones
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const target = this.getAttribute('data-target');
+                
+                // Actualizar botones de navegación
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Mostrar sección correspondiente
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(target).classList.add('active');
+                
+                // Si es la tienda, mostrar los items
+                if (target === 'tienda') {
+                    mostrarTienda();
+                }
+            });
+        });
+
+        // Cambiar entre tipos de inventario
+        document.querySelectorAll('.inventory-type-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tipo = this.getAttribute('data-type');
+                
+                // Actualizar botones de tipo de inventario
+                document.querySelectorAll('.inventory-type-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Mostrar inventario del tipo seleccionado
+                mostrarInventario(tipo);
+            });
+        });
+
+        // Mostrar inventario
+        function mostrarInventario(tipo) {
             if (!jugadorActual) return;
 
-            // Verificar si tiene al menos un sobre
+            const inventarioUsuario = jugadorActual.inventario.filter(item => item.tipo_item === tipo);
+            const display = document.getElementById('inventario-content');
+            
+            if (inventarioUsuario.length === 0) {
+                display.innerHTML = '<div class="empty-message">No tienes items en este inventario</div>';
+                return;
+            }
+
+            let html = '<div class="items-grid">';
+            
+            inventarioUsuario.forEach(item => {
+                let itemInfo;
+                let itemEmoji = '🃏';
+                
+                if (tipo === 'cartas') {
+                    const carta = cartas.find(c => c.id === item.item_id);
+                    itemInfo = carta;
+                    itemEmoji = carta.tipo === 'rara' ? '✨' : '⚡';
+                } else if (tipo === 'sobres') {
+                    const sobre = sobres.find(s => s.id === item.item_id);
+                    itemInfo = sobre;
+                    itemEmoji = sobre.tipo === 'especial' ? '🎁' : '📦';
+                } else if (tipo === 'objetos') {
+                    const obj = objetos.find(o => o.id === item.item_id);
+                    itemInfo = obj;
+                    itemEmoji = '🧪';
+                }
+
+                html += `
+                <div class="item-card">
+                    <div class="item-image">${itemEmoji}</div>
+                    <div class="item-name">${itemInfo.nombre}</div>
+                    <div class="item-quantity">x${item.cantidad}</div>
+                    <button class="item-action ${tipo === 'sobres' ? 'sobre' : ''}" 
+                            onclick="${tipo === 'sobres' ? 'abrirSobre(' + item.item_id + ')' : 'usarItem(' + item.item_id + ', \'' + tipo + '\')'}">
+                        ${tipo === 'sobres' ? 'Abrir Sobre' : 'Usar'}
+                    </button>
+                </div>
+                `;
+            });
+            
+            html += '</div>';
+            display.innerHTML = html;
+        }
+
+        // Abrir sobre
+        function abrirSobre(sobreId) {
+            if (!jugadorActual) return;
+
+            // Verificar si tiene el sobre
             const sobreEnInventario = jugadorActual.inventario.find(item => 
-                item.tipo_item === 'sobre' && item.item_id === 1
+                item.tipo_item === 'sobre' && item.item_id === sobreId
             );
 
             if (!sobreEnInventario || sobreEnInventario.cantidad <= 0) {
-                alert('No tienes sobres para abrir. Compra uno en la tienda.');
+                alert('No tienes este sobre para abrir.');
                 return;
             }
 
             // Restar un sobre del inventario
             sobreEnInventario.cantidad--;
             if (sobreEnInventario.cantidad <= 0) {
-                jugadorActual.inventario = jugadorActual.inventario.filter(item => !(item.tipo_item === 'sobre' && item.item_id === 1));
+                jugadorActual.inventario = jugadorActual.inventario.filter(
+                    item => !(item.tipo_item === 'sobre' && item.item_id === sobreId)
+                );
             }
 
-            // Generar 3 cartas aleatorias (80% común, 20% rara)
+            // Generar cartas aleatorias
             const nuevasCartas = [];
-            for (let i = 0; i < 3; i++) {
-                const esRara = Math.random() < 0.2; // 20% de ser rara
+            const sobre = sobres.find(s => s.id === sobreId);
+            
+            // Determinar cantidad de cartas según tipo de sobre
+            const cantidadCartas = sobre.tipo === 'especial' ? 4 : 3;
+            
+            for (let i = 0; i < cantidadCartas; i++) {
+                // 80% común, 20% rara
+                const esRara = Math.random() < 0.2;
                 const tipoBuscado = esRara ? 'rara' : 'comun';
                 const cartasDelTipo = cartas.filter(c => c.tipo === tipoBuscado);
                 const cartaSeleccionada = cartasDelTipo[Math.floor(Math.random() * cartasDelTipo.length)];
@@ -234,33 +579,77 @@
                 }
             });
 
-            alert(`Has abierto un sobre y obtenido:\n${nuevasCartas.map(c => c.nombre).join('\n')}`);
+            alert(`¡Has abierto un sobre y obtenido:\n${nuevasCartas.map(c => c.nombre).join('\n')}`);
             guardarJugador();
-            mostrarInventario();
-        }
-
-        // Usar carta - elimina del inventario
-        function usarCarta(cartaId) {
-            if (!jugadorActual) return;
-
-            const cartaEnInventario = jugadorActual.inventario.find(item => 
-                item.tipo_item === 'carta' && item.item_id === cartaId
-            );
-
-            if (cartaEnInventario) {
-                cartaEnInventario.cantidad--;
-                if (cartaEnInventario.cantidad <= 0) {
-                    jugadorActual.inventario = jugadorActual.inventario.filter(
-                        item => !(item.tipo_item === 'carta' && item.item_id === cartaId)
-                    );
-                }
-                guardarJugador();
-                mostrarInventario();
-                alert('Carta usada correctamente');
+            
+            // Actualizar vista de inventario
+            mostrarInventario('cartas');
+            
+            // Si estábamos en la vista de sobres, actualizamos también
+            if (document.querySelector('.inventory-type-btn.active').getAttribute('data-type') === 'sobres') {
+                mostrarInventario('sobres');
             }
         }
 
-        // Comprar con monedas
+        // Usar item
+        function usarItem(itemId, tipo) {
+            if (!jugadorActual) return;
+
+            const itemEnInventario = jugadorActual.inventario.find(item => 
+                item.tipo_item === tipo && item.item_id === itemId
+            );
+
+            if (itemEnInventario) {
+                itemEnInventario.cantidad--;
+                if (itemEnInventario.cantidad <= 0) {
+                    jugadorActual.inventario = jugadorActual.inventario.filter(
+                        item => !(item.tipo_item === tipo && item.item_id === itemId)
+                    );
+                }
+                
+                guardarJugador();
+                
+                // Actualizar vista de inventario
+                mostrarInventario(tipo);
+                
+                alert('¡Item usado correctamente!');
+            }
+        }
+
+        // Mostrar tienda
+        function mostrarTienda() {
+            const display = document.getElementById('tienda-content');
+            
+            let html = '';
+            
+            // Sobres disponibles
+            sobres.forEach(sobre => {
+                html += `
+                <div class="item-card">
+                    <div class="item-image">${sobre.tipo === 'especial' ? '🎁' : '📦'}</div>
+                    <div class="item-name">${sobre.nombre}</div>
+                    <div class="item-quantity">${sobre.precio} <img src="https://static.wikia.nocookie.net/pokemongohelp/images/9/99/Pokecoin1.png/revision/latest?cb=20160923165335" width="16" height="16"> </div>
+                    <button class="item-action sobre" onclick="comprarItem('sobre', ${sobre.id})">Comprar</button>
+                </div>
+                `;
+            });
+
+            // Objetos disponibles
+            objetos.forEach(objeto => {
+                html += `
+                <div class="item-card">
+                    <div class="item-image">🧪</div>
+                    <div class="item-name">${objeto.nombre}</div>
+                    <div class="item-quantity">${objeto.precio} <img src="https://static.wikia.nocookie.net/pokemongohelp/images/9/99/Pokecoin1.png/revision/latest?cb=20160923165335" width="16" height="16"> </div>
+                    <button class="item-action" onclick="comprarItem('objeto', ${objeto.id})">Comprar</button>
+                </div>
+                `;
+            });
+
+            display.innerHTML = html;
+        }
+
+        // Comprar item
         function comprarItem(tipo, itemId) {
             if (!jugadorActual) return;
 
@@ -276,7 +665,7 @@
             }
 
             if (jugadorActual.monedas < precio) {
-                alert('No tienes suficientes monedas');
+                alert('No tienes suficientes Pokecoins');
                 return;
             }
 
@@ -300,83 +689,11 @@
 
             guardarJugador();
             actualizarMonedas();
-            mostrarInventario();
-            alert(`Has comprado ${item.nombre} por ${precio} monedas`);
-        }
-
-        // Actualizar monedas en pantalla
-        function actualizarMonedas() {
-            document.getElementById('monedas-count').textContent = jugadorActual.monedas;
-        }
-
-        // Mostrar inventario
-        function mostrarInventario() {
-            if (!jugadorActual) return;
-
-            const inventarioUsuario = jugadorActual.inventario;
-            const display = document.getElementById('inventario-display');
             
-            if (inventarioUsuario.length === 0) {
-                display.innerHTML = '<p>No tienes items en tu inventario</p>';
-                return;
-            }
-
-            let html = '';
-            inventarioUsuario.forEach(item => {
-                let itemInfo;
-                let usarBtn = '';
-
-                if (item.tipo_item === 'carta') {
-                    const carta = cartas.find(c => c.id === item.item_id);
-                    itemInfo = `${carta.nombre} (${carta.tipo}) - ${item.cantidad}x`;
-                    usarBtn = `<button class="btn btn-danger" onclick="usarCarta(${carta.id})">Usar</button>`;
-                } else if (item.tipo_item === 'sobre') {
-                    const sobre = sobres.find(s => s.id === item.item_id);
-                    itemInfo = `${sobre.nombre} - ${item.cantidad}x`;
-                } else if (item.tipo_item === 'objeto') {
-                    const obj = objetos.find(o => o.id === item.item_id);
-                    itemInfo = `${obj.nombre} - ${item.cantidad}x`;
-                }
-
-                html += `<div class="item">${itemInfo} ${usarBtn}</div>`;
-            });
-
-            display.innerHTML = html;
-        }
-
-        // Mostrar tienda
-        function mostrarTienda() {
-            document.getElementById('tienda-section').style.display = 'block';
+            // Actualizar vista de tienda
+            mostrarTienda();
             
-            const tiendaDisplay = document.getElementById('tienda-items');
-            let html = '';
-
-            // Sobres disponibles
-            sobres.forEach(sobre => {
-                html += `
-                <div class="shop-item">
-                    <span>${sobre.nombre} - ${sobre.precio} monedas</span>
-                    <button class="btn btn-success" onclick="comprarItem('sobre', ${sobre.id})">Comprar</button>
-                </div>
-                `;
-            });
-
-            // Objetos disponibles
-            objetos.forEach(objeto => {
-                html += `
-                <div class="shop-item">
-                    <span>${objeto.nombre} - ${objeto.precio} monedas</span>
-                    <button class="btn btn-success" onclick="comprarItem('objeto', ${objeto.id})">Comprar</button>
-                </div>
-                `;
-            });
-
-            tiendaDisplay.innerHTML = html;
-        }
-
-        // Cerrar tienda
-        function cerrarTienda() {
-            document.getElementById('tienda-section').style.display = 'none';
+            alert(`¡Has comprado ${item.nombre} por ${precio} Pokecoins!`);
         }
     </script>
 </body>
