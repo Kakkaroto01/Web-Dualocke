@@ -298,6 +298,35 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* Estilo específico para la ruleta */
+        .ruleta-container {
+            text-align: center;
+        }
+
+        .ruleta-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .ruleta-btn:hover {
+            background: #c0392b;
+        }
+
+        .ruleta-result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #ffcb05;
+            font-weight: bold;
+        }
+
         @media (max-width: 1000px) {
             .items-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -343,7 +372,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión -->
-                <div class="version-text">versión 1.5</div>
+                <div class="version-text">versión 1.6</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -369,6 +398,7 @@
             <div class="nav-bar">
                 <button class="nav-btn active" data-target="inventario">Inventario📖</button>
                 <button class="nav-btn" data-target="tienda">Tienda🛒</button>
+                <button class="nav-btn" data-target="ruleta">Ruleta🎰</button> <!-- Nuevo botón -->
             </div>
 
             <!-- Sección de Inventario -->
@@ -391,6 +421,16 @@
                     <!-- Los items de la tienda se generarán aquí -->
                 </div>
             </div>
+
+            <!-- Sección de Ruleta -->
+            <div id="ruleta" class="section">
+                <h2 class="section-title">RULETA</h2>
+                <div class="ruleta-container">
+                    <button class="ruleta-btn" onclick="girarRuleta()">GIRAR RULETA</button>
+                    <div id="ruleta-result" class="ruleta-result"></div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -481,6 +521,70 @@
             { id: 24, nombre: "Capsula habilidad", tipo: "otro", precio: 15 }
         ];
 
+        // Configuración de la Ruleta
+        const ruletaConfig = [
+            // 13 vacíos
+            { tipo: 'vacio', descripcion: 'Nada' },
+            { tipo: 'vacio', descripcion: 'Nada' },
+            { tipo: 'vacio', descripcion: 'Nada' },
+            { tipo: 'vacio', descripcion: 'Nada' },
+            { tipo: 'vacio', descripcion: 'Nada' },
+            { tipo: 'vacio', descripcion: 'Nada' },
+            { tipo: 'vacio', descripcion: 'Nada' },
+            { tipo: 'vacio', descripcion: 'Nada' },
+            { tipo: 'vacio', descripcion: 'Nada' },
+            { tipo: 'vacio', descripcion: 'Nada' },
+            { tipo: 'vacio', descripcion: 'Nada' },
+            { tipo: 'vacio', descripcion: 'Nada' },
+            { tipo: 'vacio', descripcion: 'Nada' },
+            // 10 +1 oro
+            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
+            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
+            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
+            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
+            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
+            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
+            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
+            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
+            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
+            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
+            // 5 +3 oro
+            { tipo: 'oro', cantidad: 3, descripcion: '+3 Oro' },
+            { tipo: 'oro', cantidad: 3, descripcion: '+3 Oro' },
+            { tipo: 'oro', cantidad: 3, descripcion: '+3 Oro' },
+            { tipo: 'oro', cantidad: 3, descripcion: '+3 Oro' },
+            { tipo: 'oro', cantidad: 3, descripcion: '+3 Oro' },
+            // 5 +5 oro
+            { tipo: 'oro', cantidad: 5, descripcion: '+5 Oro' },
+            { tipo: 'oro', cantidad: 5, descripcion: '+5 Oro' },
+            { tipo: 'oro', cantidad: 5, descripcion: '+5 Oro' },
+            { tipo: 'oro', cantidad: 5, descripcion: '+5 Oro' },
+            { tipo: 'oro', cantidad: 5, descripcion: '+5 Oro' },
+            // 2 +7 oro
+            { tipo: 'oro', cantidad: 7, descripcion: '+7 Oro' },
+            { tipo: 'oro', cantidad: 7, descripcion: '+7 Oro' },
+            // 5 sobres comunes
+            { tipo: 'sobre', id: 1, descripcion: 'Sobre Común' },
+            { tipo: 'sobre', id: 1, descripcion: 'Sobre Común' },
+            { tipo: 'sobre', id: 1, descripcion: 'Sobre Común' },
+            { tipo: 'sobre', id: 1, descripcion: 'Sobre Común' },
+            { tipo: 'sobre', id: 1, descripcion: 'Sobre Común' },
+            // 5 sobres raros
+            { tipo: 'sobre', id: 2, descripcion: 'Sobre Raro' },
+            { tipo: 'sobre', id: 2, descripcion: 'Sobre Raro' },
+            { tipo: 'sobre', id: 2, descripcion: 'Sobre Raro' },
+            { tipo: 'sobre', id: 2, descripcion: 'Sobre Raro' },
+            { tipo: 'sobre', id: 2, descripcion: 'Sobre Raro' },
+            // 3 sobres épicos
+            { tipo: 'sobre', id: 3, descripcion: 'Sobre Épico' },
+            { tipo: 'sobre', id: 3, descripcion: 'Sobre Épico' },
+            { tipo: 'sobre', id: 3, descripcion: 'Sobre Épico' },
+            // 1 sobre legendario
+            { tipo: 'sobre', id: 4, descripcion: 'Sobre Legendario' },
+            // 1 objeto aleatorio (15 o más)
+            { tipo: 'objeto_aleatorio', descripcion: 'Objeto Aleatorio (15+)' }
+        ];
+
         // Jugador actual
         let jugadorActual = null;
 
@@ -541,6 +645,10 @@
                 // Si es la tienda, mostrar los items
                 if (target === 'tienda') {
                     mostrarTienda();
+                }
+                // Si es la ruleta, limpiar el resultado anterior
+                if (target === 'ruleta') {
+                    document.getElementById('ruleta-result').textContent = '';
                 }
             });
         });
@@ -823,6 +931,82 @@
             mostrarTienda();
             
             alert(`¡Has comprado ${item.nombre} por ${precio} Pokecoins!`);
+        }
+
+        // Ruleta
+        function girarRuleta() {
+            if (!jugadorActual) return;
+
+            // Seleccionar una casilla aleatoria
+            const casilla = ruletaConfig[Math.floor(Math.random() * ruletaConfig.length)];
+            const resultDiv = document.getElementById('ruleta-result');
+
+            if (casilla.tipo === 'vacio') {
+                resultDiv.textContent = `¡Oh vaya! ${casilla.descripcion}.`;
+                alert(resultDiv.textContent);
+            } else if (casilla.tipo === 'oro') {
+                jugadorActual.monedas += casilla.cantidad;
+                guardarJugador();
+                actualizarMonedas();
+                resultDiv.textContent = `¡Felicidades! Ganaste ${casilla.cantidad} monedas.`;
+                alert(resultDiv.textContent);
+            } else if (casilla.tipo === 'sobre') {
+                const sobre = sobres.find(s => s.id === casilla.id);
+                if (!sobre) {
+                    alert("Error: Sobre no encontrado en la configuración de la ruleta.");
+                    return;
+                }
+                const itemExistente = jugadorActual.inventario.find(i => 
+                    i.tipo_item === 'sobres' && i.item_id === casilla.id
+                );
+                if (itemExistente) {
+                    itemExistente.cantidad++;
+                } else {
+                    jugadorActual.inventario.push({
+                        tipo_item: 'sobres',
+                        item_id: casilla.id,
+                        cantidad: 1
+                    });
+                }
+                guardarJugador();
+                resultDiv.textContent = `¡Felicidades! Ganaste un ${sobre.nombre}.`;
+                alert(resultDiv.textContent);
+                // Actualizar vista de inventario de sobres si es necesario
+                if (document.getElementById('inventario').classList.contains('active') && 
+                    document.querySelector('.inventory-type-btn.active').getAttribute('data-type') === 'sobres') {
+                    mostrarInventario('sobres');
+                }
+            } else if (casilla.tipo === 'objeto_aleatorio') {
+                // Filtrar objetos de 15 o más monedas
+                const objetosElegibles = objetos.filter(obj => obj.precio >= 15);
+                if (objetosElegibles.length === 0) {
+                    alert("Error: No hay objetos disponibles de 15 monedas o más.");
+                    return;
+                }
+                // Seleccionar un objeto aleatorio de los elegibles
+                const objetoSeleccionado = objetosElegibles[Math.floor(Math.random() * objetosElegibles.length)];
+                
+                const itemExistente = jugadorActual.inventario.find(i => 
+                    i.tipo_item === 'objetos' && i.item_id === objetoSeleccionado.id
+                );
+                if (itemExistente) {
+                    itemExistente.cantidad++;
+                } else {
+                    jugadorActual.inventario.push({
+                        tipo_item: 'objetos',
+                        item_id: objetoSeleccionado.id,
+                        cantidad: 1
+                    });
+                }
+                guardarJugador();
+                resultDiv.textContent = `¡Felicidades! Ganaste un ${objetoSeleccionado.nombre}.`;
+                alert(resultDiv.textContent);
+                // Actualizar vista de inventario de objetos si es necesario
+                if (document.getElementById('inventario').classList.contains('active') && 
+                    document.querySelector('.inventory-type-btn.active').getAttribute('data-type') === 'objetos') {
+                    mostrarInventario('objetos');
+                }
+            }
         }
     </script>
 </body>
