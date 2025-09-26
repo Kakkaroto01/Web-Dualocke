@@ -327,6 +327,50 @@
             font-weight: bold;
         }
 
+        /* Efectos visuales para la ruleta */
+        /* Efecto para premios raros (Sobre Épico, Sobre Legendario, Objeto Aleatorio 15+) */
+        .premio-raro {
+            animation: shake 0.5s ease-in-out, glowRare 1s ease-out;
+            color: #9b59b6; /* Púrpura para rareza */
+            font-weight: bold;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        @keyframes glowRare {
+            0% { text-shadow: 0 0 5px #fff; }
+            50% { text-shadow: 0 0 20px #9b59b6, 0 0 30px #9b59b6; }
+            100% { text-shadow: 0 0 5px #fff; }
+        }
+
+        /* Efecto para premios muy raros (Sobre Legendario, Oro alto) */
+        .premio-muy-raro {
+            animation: shake 0.5s ease-in-out, glowVeryRare 1.2s ease-out;
+            color: #f1c40f; /* Amarillo dorado para muy raro */
+            font-weight: bold;
+        }
+
+        @keyframes glowVeryRare {
+            0% { text-shadow: 0 0 5px #fff; }
+            50% { text-shadow: 0 0 20px #f1c40f, 0 0 30px #f1c40f, 0 0 40px #f1c40f; }
+            100% { text-shadow: 0 0 5px #fff; }
+        }
+
+        /* Efecto para premios comunes (Oro bajo, Sobre Común) */
+        .premio-comun {
+            animation: fadeIn 0.3s ease-out;
+            color: #ddd; /* Gris claro para común */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         @media (max-width: 1000px) {
             .items-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -372,7 +416,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión -->
-                <div class="version-text">versión 1.6</div>
+                <div class="version-text">versión 2.0</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -941,15 +985,30 @@
             const casilla = ruletaConfig[Math.floor(Math.random() * ruletaConfig.length)];
             const resultDiv = document.getElementById('ruleta-result');
 
+            // Limpiar efectos anteriores
+            resultDiv.className = 'ruleta-result'; // Vuelve a la clase base
+
             if (casilla.tipo === 'vacio') {
-                resultDiv.textContent = `¡Oh vaya! ${casilla.descripcion}.`;
-                alert(resultDiv.textContent);
+                const mensaje = `¡Oh vaya! ${casilla.descripcion}.`;
+                resultDiv.textContent = mensaje;
+                // No se aplica efecto visual especial para vacío
+                alert(mensaje);
             } else if (casilla.tipo === 'oro') {
                 jugadorActual.monedas += casilla.cantidad;
                 guardarJugador();
                 actualizarMonedas();
-                resultDiv.textContent = `¡Felicidades! Ganaste ${casilla.cantidad} monedas.`;
-                alert(resultDiv.textContent);
+                const mensaje = `¡Felicidades! Ganaste ${casilla.cantidad} monedas.`;
+                resultDiv.textContent = mensaje;
+
+                // Aplicar efecto según cantidad de oro
+                if (casilla.cantidad >= 7) {
+                    resultDiv.classList.add('premio-muy-raro');
+                } else if (casilla.cantidad >= 5) {
+                    resultDiv.classList.add('premio-raro');
+                } else {
+                    resultDiv.classList.add('premio-comun');
+                }
+                alert(mensaje);
             } else if (casilla.tipo === 'sobre') {
                 const sobre = sobres.find(s => s.id === casilla.id);
                 if (!sobre) {
@@ -969,8 +1028,18 @@
                     });
                 }
                 guardarJugador();
-                resultDiv.textContent = `¡Felicidades! Ganaste un ${sobre.nombre}.`;
-                alert(resultDiv.textContent);
+                const mensaje = `¡Felicidades! Ganaste un ${sobre.nombre}.`;
+                resultDiv.textContent = mensaje;
+
+                // Aplicar efecto según tipo de sobre (basado en ID o precio)
+                if (sobre.id === 4) { // Sobre legendario
+                    resultDiv.classList.add('premio-muy-raro');
+                } else if (sobre.id === 3) { // Sobre épico
+                    resultDiv.classList.add('premio-raro');
+                } else {
+                    resultDiv.classList.add('premio-comun');
+                }
+                alert(mensaje);
                 // Actualizar vista de inventario de sobres si es necesario
                 if (document.getElementById('inventario').classList.contains('active') && 
                     document.querySelector('.inventory-type-btn.active').getAttribute('data-type') === 'sobres') {
@@ -999,8 +1068,11 @@
                     });
                 }
                 guardarJugador();
-                resultDiv.textContent = `¡Felicidades! Ganaste un ${objetoSeleccionado.nombre}.`;
-                alert(resultDiv.textContent);
+                const mensaje = `¡Felicidades! Ganaste un ${objetoSeleccionado.nombre}.`;
+                resultDiv.textContent = mensaje;
+                // Los objetos aleatorios de 15+ son considerados raros
+                resultDiv.classList.add('premio-muy-raro');
+                alert(mensaje);
                 // Actualizar vista de inventario de objetos si es necesario
                 if (document.getElementById('inventario').classList.contains('active') && 
                     document.querySelector('.inventory-type-btn.active').getAttribute('data-type') === 'objetos') {
