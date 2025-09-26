@@ -1,3 +1,8 @@
+Entendido. Procederé a actualizar el código HTML con la nueva información para sobres, objetos y cartas. Borraré los datos antiguos y los reemplazaré por los nuevos que me has proporcionado. Añadiré la lógica específica para las cartas de oro y me aseguraré de que los objetos competitivos tengan el precio de 15 monedas y el Megapiedra a elección cueste 25.
+
+También incrementaré la versión a 1.4 como solicitaste.
+
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -343,7 +348,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión -->
-                <div class="version-text">versión 1.3</div>
+                <div class="version-text">versión 1.4</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -395,27 +400,90 @@
     </div>
 
     <script>
-        // Datos iniciales
+        // Datos actualizados
         const cartas = [
-            { id: 1, nombre: "Pikachu", tipo: "comun", descripcion: "Pokémon de tipo Eléctrico" },
-            { id: 2, nombre: "Charmander", tipo: "comun", descripcion: "Pokémon de tipo Fuego" },
-            { id: 3, nombre: "Bulbasaur", tipo: "comun", descripcion: "Pokémon de tipo Planta" },
-            { id: 4, nombre: "Squirtle", tipo: "comun", descripcion: "Pokémon de tipo Agua" },
-            { id: 5, nombre: "Jigglypuff", tipo: "comun", descripcion: "Pokémon de tipo Normal" },
-            { id: 6, nombre: "Mewtwo", tipo: "rara", descripcion: "Pokémon Legendario Psíquico" },
-            { id: 7, nombre: "Charizard", tipo: "rara", descripcion: "Pokémon de tipo Fuego/Volador" },
-            { id: 8, nombre: "Dragonite", tipo: "rara", descripcion: "Pokémon de tipo Dragón/Volador" }
+            // Ataque
+            { id: 1, nombre: "Impides a tu rival capturar ese pokemon", tipo: "E" },
+            { id: 2, nombre: "Obligas a tu rival a cambiar de pokemon de ruta", tipo: "R" },
+            { id: 3, nombre: "Libera un pokemon usado en ese gym para matar un pokemon del rival", tipo: "E" },
+            { id: 4, nombre: "Matar un pokemon usado en ese gym para liberar un pokemon del rival", tipo: "L" },
+            { id: 5, nombre: "Intercambia un pokemon de tu equipo con uno de tu rival", tipo: "E" },
+            { id: 6, nombre: "Roba un pokemon", tipo: "L" },
+            // Defensa
+            { id: 7, nombre: "Relincho", tipo: "E" },
+            // Bonus - Oro
+            { id: 8, nombre: "Oro (C)", tipo: "C" },
+            { id: 9, nombre: "Oro (R)", tipo: "R" },
+            { id: 10, nombre: "Oro (E)", tipo: "E" },
+            { id: 11, nombre: "Oro (L)", tipo: "L" },
+            // Bonus - Rule
+            { id: 12, nombre: "Rule (R)", tipo: "R" },
+            { id: 13, nombre: "Rule (E)", tipo: "E" },
+            { id: 14, nombre: "Rule (L)", tipo: "L" },
+            // Bonus - Otros
+            { id: 15, nombre: "Liberas Pokémon", tipo: "R" },
+            // Otro
+            { id: 16, nombre: "Revive un pokemon", tipo: "E" },
+            { id: 17, nombre: "Libera un pokemon para revivir otro pokemon", tipo: "R" },
+            { id: 18, nombre: "Capturar otro pokemon de ruta extra", tipo: "R" },
+            { id: 19, nombre: "Cambiar de pokemon de ruta", tipo: "C" },
+            { id: 20, nombre: "Ganas una poti", tipo: "C" },
+            { id: 21, nombre: "Ganas una superpoti", tipo: "C" },
+            { id: 22, nombre: "Gana un totem de inmortalidad(objeto random)", tipo: "R" },
+            { id: 23, nombre: "Puedes comprar cualquier objeto curativo", tipo: "R" },
+            { id: 24, nombre: "3 Puedes comprar cualquier objeto curativo", tipo: "E" },
+            { id: 25, nombre: "Ambos jugadores pueden comprar una poti", tipo: "C" },
+            { id: 26, nombre: "Haz un pokemon shiny", tipo: "R" },
+            { id: 27, nombre: "Cambia la naturaleza de un pokemon", tipo: "R" },
+            { id: 28, nombre: "Intercambia las habilidades de 2 de tus pokemon", tipo: "L" },
+            { id: 29, nombre: "Pon a 31 IV's 1 estadística", tipo: "E" },
+            { id: 30, nombre: "Libera un Pokémon por cada 2 estadísticas que quieras a 31 IV's", tipo: "E" },
+            { id: 31, nombre: "Obtienes una masterball", tipo: "E" },
+            { id: 32, nombre: "Robas 2 objetos curativos del rival", tipo: "R" },
+            { id: 33, nombre: "Obliga a tu rival a retar al líder con 1 pokemon menos", tipo: "E" },
+            { id: 34, nombre: "Libera un shiny por 10 monedas", tipo: "R" },
+            { id: 35, nombre: "Obtén entre 0 y 20 de oro", tipo: "E" },
+            { id: 36, nombre: "Si tu inicial no ha participado y no ha muerto en los 4 primeros gym 31 IV's en todo", tipo: "R" },
+            { id: 37, nombre: "Consigue un item competitivo aleatorio", tipo: "E" },
+            { id: 38, nombre: "Consigue un item competitivo de tu elección", tipo: "L" }
         ];
 
         const sobres = [
-            { id: 1, nombre: "Sobre Común", precio: 50, tipo: "comun" },
-            { id: 2, nombre: "Sobre Especial", precio: 100, tipo: "especial" }
+            { id: 1, nombre: "Sobre común", cartas: 2, probabilidades: { C: 80, R: 15, E: 4, L: 1 }, precio: 5 },
+            { id: 2, nombre: "Sobre raro", cartas: 3, probabilidades: { C: 50, R: 35, E: 10, L: 5 }, precio: 10 },
+            { id: 3, nombre: "Sobre épico", cartas: 3, probabilidades: { C: 20, R: 50, E: 20, L: 10 }, precio: 15 },
+            { id: 4, nombre: "Sobre legendario", cartas: 2, contenido: ["L", "E"], precio: 20 },
+            { id: 5, nombre: "Sobre gym", cartas: 2, probabilidades: { C: 65, R: 25, E: 7, L: 3 }, precio: 0 }
         ];
 
         const objetos = [
-            { id: 1, nombre: "Poción", tipo: "consumible", efecto: "Restaura PS", precio: 25 },
-            { id: 2, nombre: "Super Poción", tipo: "consumible", efecto: "Restaura muchos PS", precio: 50 },
-            { id: 3, nombre: "Revivir", tipo: "consumible", efecto: "Revive a un Pokémon", precio: 75 }
+            // Curativos
+            { id: 1, nombre: "Poti", tipo: "curativo", precio: 2 },
+            { id: 2, nombre: "Superpoti", tipo: "curativo", precio: 3 },
+            { id: 3, nombre: "Hyperpoti", tipo: "curativo", precio: 4 },
+            { id: 4, nombre: "Restaurar todito", tipo: "curativo", precio: 5 },
+            { id: 5, nombre: "Cura total", tipo: "curativo", precio: 3 },
+            // Competitivos
+            { id: 6, nombre: "Restos", tipo: "competitivo", precio: 15 },
+            { id: 7, nombre: "Vidasfera", tipo: "competitivo", precio: 15 },
+            { id: 8, nombre: "Chaleco asalto", tipo: "competitivo", precio: 15 },
+            { id: 9, nombre: "Casco dentado", tipo: "competitivo", precio: 15 },
+            { id: 10, nombre: "Banda aguante", tipo: "competitivo", precio: 15 },
+            { id: 11, nombre: "Botas gruesas", tipo: "competitivo", precio: 15 },
+            { id: 12, nombre: "Cinta elección", tipo: "competitivo", precio: 15 },
+            { id: 13, nombre: "gafas elección", tipo: "competitivo", precio: 15 },
+            { id: 14, nombre: "pañuelo elección", tipo: "competitivo", precio: 15 },
+            { id: 15, nombre: "Hierba blanca", tipo: "competitivo", precio: 15 },
+            { id: 16, nombre: "Globo helio", tipo: "competitivo", precio: 15 },
+            { id: 17, nombre: "Lodo negro", tipo: "competitivo", precio: 15 },
+            { id: 18, nombre: "Mineral evolutivo", tipo: "competitivo", precio: 15 },
+            { id: 19, nombre: "Hierba única", tipo: "competitivo", precio: 15 },
+            { id: 20, nombre: "Llamasfera", tipo: "competitivo", precio: 15 },
+            { id: 21, nombre: "Toxiesfera", tipo: "competitivo", precio: 15 },
+            { id: 22, nombre: "Piedra de clima", tipo: "competitivo", precio: 15 },
+            // Otros
+            { id: 23, nombre: "Megapiedra a elección", tipo: "otro", precio: 25 },
+            { id: 24, nombre: "Capsula habilidad", tipo: "otro", precio: 15 }
         ];
 
         // Jugador actual
@@ -517,11 +585,11 @@
                 if (tipo === 'cartas') {
                     const carta = cartas.find(c => c.id === item.item_id);
                     itemInfo = carta;
-                    itemEmoji = carta.tipo === 'rara' ? '✨' : '⚡';
+                    itemEmoji = carta.tipo === 'L' ? '⭐' : carta.tipo === 'E' ? '✨' : carta.tipo === 'R' ? '⚡' : '🔸';
                 } else if (tipo === 'sobres') {
                     const sobre = sobres.find(s => s.id === item.item_id);
                     itemInfo = sobre;
-                    itemEmoji = sobre.tipo === 'especial' ? '🎁' : '📦';
+                    itemEmoji = '📦';
                 } else if (tipo === 'objetos') {
                     const obj = objetos.find(o => o.id === item.item_id);
                     itemInfo = obj;
@@ -567,21 +635,37 @@
                 );
             }
 
-            // Generar cartas aleatorias
+            // Generar cartas aleatorias basadas en el sobre
             const nuevasCartas = [];
             const sobre = sobres.find(s => s.id === sobreId);
             
             // Determinar cantidad de cartas según tipo de sobre
-            const cantidadCartas = sobre.tipo === 'especial' ? 4 : 3;
+            const cantidadCartas = sobre.cartas;
             
             for (let i = 0; i < cantidadCartas; i++) {
-                // 80% común, 20% rara
-                const esRara = Math.random() < 0.2;
-                const tipoBuscado = esRara ? 'rara' : 'comun';
-                const cartasDelTipo = cartas.filter(c => c.tipo === tipoBuscado);
-                const cartaSeleccionada = cartasDelTipo[Math.floor(Math.random() * cartasDelTipo.length)];
-                
-                nuevasCartas.push(cartaSeleccionada);
+                // Si es sobre legendario, tiene contenido fijo
+                if (sobre.contenido) {
+                    const tipoCarta = sobre.contenido[i];
+                    const cartasDelTipo = cartas.filter(c => c.tipo === tipoCarta);
+                    const cartaSeleccionada = cartasDelTipo[Math.floor(Math.random() * cartasDelTipo.length)];
+                    nuevasCartas.push(cartaSeleccionada);
+                } else {
+                    // Seleccionar tipo de carta según probabilidades
+                    const rand = Math.random() * 100;
+                    let tipoCarta = 'C'; // Por defecto común
+                    let acumulado = 0;
+                    for (const [tipo, prob] of Object.entries(sobre.probabilidades)) {
+                        acumulado += prob;
+                        if (rand <= acumulado) {
+                            tipoCarta = tipo;
+                            break;
+                        }
+                    }
+                    
+                    const cartasDelTipo = cartas.filter(c => c.tipo === tipoCarta);
+                    const cartaSeleccionada = cartasDelTipo[Math.floor(Math.random() * cartasDelTipo.length)];
+                    nuevasCartas.push(cartaSeleccionada);
+                }
             }
 
             // Añadir cartas al inventario
@@ -629,12 +713,40 @@
                     );
                 }
                 
+                // Lógica especial para cartas
+                if (tipo === 'cartas') {
+                    const carta = cartas.find(c => c.id === itemId);
+                    if (carta.nombre.startsWith("Oro")) {
+                        let oroGanado = 0;
+                        if (carta.nombre.includes("(C)")) {
+                            oroGanado = Math.floor(Math.random() * 2) + 1; // 1 o 2
+                        } else if (carta.nombre.includes("(R)")) {
+                            oroGanado = Math.floor(Math.random() * 2) + 4; // 4 o 5
+                        } else if (carta.nombre.includes("(E)")) {
+                            oroGanado = Math.floor(Math.random() * 3) + 9; // 9, 10 o 11
+                        } else if (carta.nombre.includes("(L)")) {
+                            oroGanado = Math.floor(Math.random() * 3) + 15; // 15, 16 o 17
+                        } else if (carta.nombre.includes("Obtén entre 0 y 20 de oro")) {
+                            oroGanado = Math.floor(Math.random() * 21); // 0 a 20
+                        }
+                        jugadorActual.monedas += oroGanado;
+                        alert(`¡Has usado la carta "${carta.nombre}" y ganaste ${oroGanado} monedas!`);
+                    } else if (carta.nombre.includes("Liberas Pokémon")) {
+                        // Suponemos que "Liberas Pokémon" da 5 monedas según la descripción
+                        jugadorActual.monedas += 5;
+                        alert(`¡Has usado la carta "${carta.nombre}" y ganaste 5 monedas!`);
+                    } else {
+                        alert(`¡Has usado la carta "${carta.nombre}"! (Efecto no implementado en la interfaz)`);
+                    }
+                } else {
+                    alert('¡Item usado correctamente!');
+                }
+                
                 guardarJugador();
+                actualizarMonedas();
                 
                 // Actualizar vista de inventario
                 mostrarInventario(tipo);
-                
-                alert('¡Item usado correctamente!');
             }
         }
 
@@ -648,7 +760,7 @@
             sobres.forEach(sobre => {
                 html += `
                 <div class="item-card">
-                    <div class="item-image">${sobre.tipo === 'especial' ? '🎁' : '📦'}</div>
+                    <div class="item-image">📦</div>
                     <div class="item-name">${sobre.nombre}</div>
                     <div class="item-quantity">${sobre.precio} <img src="https://static.wikia.nocookie.net/pokemongohelp/images/9/99/Pokecoin1.png/revision/latest?cb=20160923165335" width="16" height="16"> </div>
                     <button class="item-action sobre" onclick="comprarItem('sobres', ${sobre.id})">Comprar</button>
@@ -678,10 +790,10 @@
             let item;
             let precio;
 
-            if (tipo === 'sobres') { // Corregido: 'sobres' en lugar de 'sobre'
+            if (tipo === 'sobres') {
                 item = sobres.find(s => s.id === itemId);
                 precio = item.precio;
-            } else if (tipo === 'objetos') { // Corregido: 'objetos' en lugar de 'objeto'
+            } else if (tipo === 'objetos') {
                 item = objetos.find(o => o.id === itemId);
                 precio = item.precio;
             }
@@ -703,7 +815,7 @@
                 itemExistente.cantidad++;
             } else {
                 jugadorActual.inventario.push({
-                    tipo_item: tipo, // Corregido: 'sobres' o 'objetos' (con 's')
+                    tipo_item: tipo,
                     item_id: itemId,
                     cantidad: 1
                 });
@@ -720,3 +832,4 @@
     </script>
 </body>
 </html>
+```
