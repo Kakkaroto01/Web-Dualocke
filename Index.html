@@ -45,11 +45,17 @@
         }
 
         .logo {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 24px;
-            color: #ffcb05;
-            text-shadow: 0 0 10px rgba(255, 203, 5, 0.7);
-            letter-spacing: 1px;
+            /* Eliminado el texto "DUALLOCKE POKEMON" */
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Centrado horizontalmente */
+            width: 100%; /* Asegura que ocupe todo el ancho disponible */
+            padding: 10px 0; /* Espaciado vertical */
+        }
+
+        .logo img {
+            height: 60px; /* Reducido el tamaño para que quepa adecuadamente */
+            /* El logo ya está centrado gracias a justify-content: center */
         }
 
         .coins {
@@ -333,9 +339,9 @@
         <!-- Sección Principal del Juego -->
         <div id="game-section" style="display: none;">
             <header>
+                <!-- Logo modificado: solo la imagen, centrada y con tamaño reducido -->
                 <div class="logo">
-                    <img src="Duallocke.png" alt="Duallocke Logo" style="height: 50px; vertical-align: middle;">
-                    <!-- Eliminé el texto "DUALLOCKE POKEMON" aquí -->
+                    <img src="Duallocke.png" alt="Duallocke Logo">
                 </div>
                 <div class="coins">
                     <img src="https://static.wikia.nocookie.net/pokemongohelp/images/9/99/Pokecoin1.png/revision/latest?cb=20160923165335" alt="Pokecoin">
@@ -532,7 +538,7 @@
 
             // Verificar si tiene el sobre
             const sobreEnInventario = jugadorActual.inventario.find(item => 
-                item.tipo_item === 'sobre' && item.item_id === sobreId
+                item.tipo_item === 'sobres' && item.item_id === sobreId
             );
 
             if (!sobreEnInventario || sobreEnInventario.cantidad <= 0) {
@@ -544,7 +550,7 @@
             sobreEnInventario.cantidad--;
             if (sobreEnInventario.cantidad <= 0) {
                 jugadorActual.inventario = jugadorActual.inventario.filter(
-                    item => !(item.tipo_item === 'sobre' && item.item_id === sobreId)
+                    item => !(item.tipo_item === 'sobres' && item.item_id === sobreId)
                 );
             }
 
@@ -568,14 +574,14 @@
             // Añadir cartas al inventario
             nuevasCartas.forEach(carta => {
                 const cartaExistente = jugadorActual.inventario.find(item => 
-                    item.tipo_item === 'carta' && item.item_id === carta.id
+                    item.tipo_item === 'cartas' && item.item_id === carta.id
                 );
 
                 if (cartaExistente) {
                     cartaExistente.cantidad++;
                 } else {
                     jugadorActual.inventario.push({
-                        tipo_item: 'carta',
+                        tipo_item: 'cartas',
                         item_id: carta.id,
                         cantidad: 1
                     });
@@ -632,7 +638,7 @@
                     <div class="item-image">${sobre.tipo === 'especial' ? '🎁' : '📦'}</div>
                     <div class="item-name">${sobre.nombre}</div>
                     <div class="item-quantity">${sobre.precio} <img src="https://static.wikia.nocookie.net/pokemongohelp/images/9/99/Pokecoin1.png/revision/latest?cb=20160923165335" width="16" height="16"> </div>
-                    <button class="item-action sobre" onclick="comprarItem('sobre', ${sobre.id})">Comprar</button>
+                    <button class="item-action sobre" onclick="comprarItem('sobres', ${sobre.id})">Comprar</button>
                 </div>
                 `;
             });
@@ -644,7 +650,7 @@
                     <div class="item-image">🧪</div>
                     <div class="item-name">${objeto.nombre}</div>
                     <div class="item-quantity">${objeto.precio} <img src="https://static.wikia.nocookie.net/pokemongohelp/images/9/99/Pokecoin1.png/revision/latest?cb=20160923165335" width="16" height="16"> </div>
-                    <button class="item-action" onclick="comprarItem('objeto', ${objeto.id})">Comprar</button>
+                    <button class="item-action" onclick="comprarItem('objetos', ${objeto.id})">Comprar</button>
                 </div>
                 `;
             });
@@ -659,10 +665,10 @@
             let item;
             let precio;
 
-            if (tipo === 'sobre') {
+            if (tipo === 'sobres') { // Corregido: 'sobres' en lugar de 'sobre'
                 item = sobres.find(s => s.id === itemId);
                 precio = item.precio;
-            } else if (tipo === 'objeto') {
+            } else if (tipo === 'objetos') { // Corregido: 'objetos' en lugar de 'objeto'
                 item = objetos.find(o => o.id === itemId);
                 precio = item.precio;
             }
@@ -684,7 +690,7 @@
                 itemExistente.cantidad++;
             } else {
                 jugadorActual.inventario.push({
-                    tipo_item: tipo,
+                    tipo_item: tipo, // Corregido: 'sobres' o 'objetos' (con 's')
                     item_id: itemId,
                     cantidad: 1
                 });
