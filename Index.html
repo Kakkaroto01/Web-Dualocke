@@ -126,62 +126,31 @@
     </div>
 
     <script>
-        // Simulación de base de datos en memoria
-        let jugadores = [];
-        let cartas = [];
-        let sobres = [];
-        let objetos = [];
-        let inventario = [];
+        // Inicializar datos
+        const cartas = [
+            { id: 1, nombre: "Carta Común 1", tipo: "comun", descripcion: "Pokémon de tipo Fuego" },
+            { id: 2, nombre: "Carta Común 2", tipo: "comun", descripcion: "Pokémon de tipo Agua" },
+            { id: 3, nombre: "Carta Común 3", tipo: "comun", descripcion: "Pokémon de tipo Planta" },
+            { id: 4, nombre: "Carta Común 4", tipo: "comun", descripcion: "Pokémon de tipo Eléctrico" },
+            { id: 5, nombre: "Carta Común 5", tipo: "comun", descripcion: "Pokémon de tipo Psíquico" },
+            { id: 6, nombre: "Carta Rara 1", tipo: "rara", descripcion: "Pokémon Legendario" },
+            { id: 7, nombre: "Carta Rara 2", tipo: "rara", descripcion: "Pokémon Evolucionado" },
+            { id: 8, nombre: "Carta Rara 3", tipo: "rara", descripcion: "Pokémon Mítico" }
+        ];
+
+        const sobres = [
+            { id: 1, nombre: "Sobre Básico", precio: 50 },
+            { id: 2, nombre: "Sobre Especial", precio: 100 }
+        ];
+
+        const objetos = [
+            { id: 1, nombre: "Poción", tipo: "consumible", efecto: "Restaura PS", precio: 25 },
+            { id: 2, nombre: "Super Poción", tipo: "consumible", efecto: "Restaura muchos PS", precio: 50 },
+            { id: 3, nombre: "Revivir", tipo: "consumible", efecto: "Revive a un Pokémon", precio: 75 }
+        ];
 
         // Jugador actual
         let jugadorActual = null;
-
-        // Inicializar datos
-        function inicializarDatos() {
-            // Cartas comunes
-            cartas = [
-                { id: 1, nombre: "Carta Común 1", tipo: "comun", descripcion: "Pokémon de tipo Fuego" },
-                { id: 2, nombre: "Carta Común 2", tipo: "comun", descripcion: "Pokémon de tipo Agua" },
-                { id: 3, nombre: "Carta Común 3", tipo: "comun", descripcion: "Pokémon de tipo Planta" },
-                { id: 4, nombre: "Carta Común 4", tipo: "comun", descripcion: "Pokémon de tipo Eléctrico" },
-                { id: 5, nombre: "Carta Común 5", tipo: "comun", descripcion: "Pokémon de tipo Psíquico" },
-                
-                // Cartas raras
-                { id: 6, nombre: "Carta Rara 1", tipo: "rara", descripcion: "Pokémon Legendario" },
-                { id: 7, nombre: "Carta Rara 2", tipo: "rara", descripcion: "Pokémon Evolucionado" },
-                { id: 8, nombre: "Carta Rara 3", tipo: "rara", descripcion: "Pokémon Mítico" }
-            ];
-
-            // Sobres
-            sobres = [
-                { id: 1, nombre: "Sobre Básico", precio: 50 },
-                { id: 2, nombre: "Sobre Especial", precio: 100 }
-            ];
-
-            // Objetos
-            objetos = [
-                { id: 1, nombre: "Poción", tipo: "consumible", efecto: "Restaura PS", precio: 25 },
-                { id: 2, nombre: "Super Poción", tipo: "consumible", efecto: "Restaura muchos PS", precio: 50 },
-                { id: 3, nombre: "Revivir", tipo: "consumible", efecto: "Revive a un Pokémon", precio: 75 }
-            ];
-        }
-
-        // Registro de jugador
-        function registrarJugador(nombre) {
-            const jugadorExistente = jugadores.find(j => j.nombre === nombre);
-            if (jugadorExistente) {
-                return jugadorExistente;
-            }
-
-            const nuevoJugador = {
-                id: jugadores.length + 1,
-                nombre: nombre,
-                monedas: 100 // Monedas iniciales
-            };
-            
-            jugadores.push(nuevoJugador);
-            return nuevoJugador;
-        }
 
         // Login de jugador
         function login() {
@@ -191,7 +160,18 @@
                 return;
             }
 
-            jugadorActual = registrarJugador(nombre);
+            // Recuperar jugador de localStorage o crear nuevo
+            let jugador = JSON.parse(localStorage.getItem('jugador_' + nombre));
+            if (!jugador) {
+                jugador = {
+                    id: Date.now(),
+                    nombre: nombre,
+                    monedas: 100, // Monedas iniciales
+                    inventario: [] // Inventario vacío
+                };
+            }
+
+            jugadorActual = jugador;
             
             document.getElementById('login-section').style.display = 'none';
             document.getElementById('game-section').style.display = 'block';
@@ -201,18 +181,21 @@
             mostrarInventario();
         }
 
+        // Guardar jugador en localStorage
+        function guardarJugador() {
+            localStorage.setItem('jugador_' + jugadorActual.nombre, JSON.stringify(jugadorActual));
+        }
+
         // Abrir sobre - genera cartas aleatorias
         function abrirSobre() {
             if (!jugadorActual) return;
 
             // Verificar si tiene al menos un sobre
-            const sobreEnInventario = inventario.find(item => 
-                item.jugador_id === jugadorActual.id && 
-                item.tipo_item === 'sobre' && 
-                item.cantidad > 0
+            const sobreEnInventario = jugadorActual.inventario.find(item => 
+                item.tipo_item === 'sobre' && item.item_id === 1
             );
 
-            if (!sobreEnInventario) {
+            if (!sobreEnInventario || sobreEnInventario.cantidad <= 0) {
                 alert('No tienes sobres para abrir. Compra uno en la tienda.');
                 return;
             }
@@ -220,7 +203,7 @@
             // Restar un sobre del inventario
             sobreEnInventario.cantidad--;
             if (sobreEnInventario.cantidad <= 0) {
-                inventario = inventario.filter(item => item.id !== sobreEnInventario.id);
+                jugadorActual.inventario = jugadorActual.inventario.filter(item => !(item.tipo_item === 'sobre' && item.item_id === 1));
             }
 
             // Generar 3 cartas aleatorias (80% común, 20% rara)
@@ -236,18 +219,14 @@
 
             // Añadir cartas al inventario
             nuevasCartas.forEach(carta => {
-                const cartaExistente = inventario.find(item => 
-                    item.jugador_id === jugadorActual.id && 
-                    item.tipo_item === 'carta' && 
-                    item.item_id === carta.id
+                const cartaExistente = jugadorActual.inventario.find(item => 
+                    item.tipo_item === 'carta' && item.item_id === carta.id
                 );
 
                 if (cartaExistente) {
                     cartaExistente.cantidad++;
                 } else {
-                    inventario.push({
-                        id: inventario.length + 1,
-                        jugador_id: jugadorActual.id,
+                    jugadorActual.inventario.push({
                         tipo_item: 'carta',
                         item_id: carta.id,
                         cantidad: 1
@@ -256,6 +235,7 @@
             });
 
             alert(`Has abierto un sobre y obtenido:\n${nuevasCartas.map(c => c.nombre).join('\n')}`);
+            guardarJugador();
             mostrarInventario();
         }
 
@@ -263,17 +243,18 @@
         function usarCarta(cartaId) {
             if (!jugadorActual) return;
 
-            const cartaEnInventario = inventario.find(item => 
-                item.jugador_id === jugadorActual.id && 
-                item.tipo_item === 'carta' && 
-                item.item_id === cartaId
+            const cartaEnInventario = jugadorActual.inventario.find(item => 
+                item.tipo_item === 'carta' && item.item_id === cartaId
             );
 
             if (cartaEnInventario) {
                 cartaEnInventario.cantidad--;
                 if (cartaEnInventario.cantidad <= 0) {
-                    inventario = inventario.filter(item => item.id !== cartaEnInventario.id);
+                    jugadorActual.inventario = jugadorActual.inventario.filter(
+                        item => !(item.tipo_item === 'carta' && item.item_id === cartaId)
+                    );
                 }
+                guardarJugador();
                 mostrarInventario();
                 alert('Carta usada correctamente');
             }
@@ -303,24 +284,21 @@
             jugadorActual.monedas -= precio;
 
             // Añadir item al inventario
-            const itemExistente = inventario.find(i => 
-                i.jugador_id === jugadorActual.id && 
-                i.tipo_item === tipo && 
-                i.item_id === itemId
+            const itemExistente = jugadorActual.inventario.find(i => 
+                i.tipo_item === tipo && i.item_id === itemId
             );
 
             if (itemExistente) {
                 itemExistente.cantidad++;
             } else {
-                inventario.push({
-                    id: inventario.length + 1,
-                    jugador_id: jugadorActual.id,
+                jugadorActual.inventario.push({
                     tipo_item: tipo,
                     item_id: itemId,
                     cantidad: 1
                 });
             }
 
+            guardarJugador();
             actualizarMonedas();
             mostrarInventario();
             alert(`Has comprado ${item.nombre} por ${precio} monedas`);
@@ -335,7 +313,7 @@
         function mostrarInventario() {
             if (!jugadorActual) return;
 
-            const inventarioUsuario = inventario.filter(item => item.jugador_id === jugadorActual.id);
+            const inventarioUsuario = jugadorActual.inventario;
             const display = document.getElementById('inventario-display');
             
             if (inventarioUsuario.length === 0) {
@@ -400,9 +378,6 @@
         function cerrarTienda() {
             document.getElementById('tienda-section').style.display = 'none';
         }
-
-        // Inicializar la aplicación
-        inicializarDatos();
     </script>
 </body>
 </html>
