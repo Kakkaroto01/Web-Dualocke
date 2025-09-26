@@ -343,7 +343,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión -->
-                <div class="version-text">versión 1.4</div>
+                <div class="version-text">versión 1.5</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -407,10 +407,10 @@
             // Defensa
             { id: 7, nombre: "Relincho", tipo: "E" },
             // Bonus - Oro
-            { id: 8, nombre: "Oro (C)", tipo: "C" },
-            { id: 9, nombre: "Oro (R)", tipo: "R" },
-            { id: 10, nombre: "Oro (E)", tipo: "E" },
-            { id: 11, nombre: "Oro (L)", tipo: "L" },
+            { id: 8, nombre: "Oro +1/2", tipo: "C" },
+            { id: 9, nombre: "Oro +4/5", tipo: "R" },
+            { id: 10, nombre: "Oro +9/10/11", tipo: "E" },
+            { id: 11, nombre: "Oro +15/16/17", tipo: "L" },
             // Bonus - Rule
             { id: 12, nombre: "Rule (R)", tipo: "R" },
             { id: 13, nombre: "Rule (E)", tipo: "E" },
@@ -713,13 +713,13 @@
                     const carta = cartas.find(c => c.id === itemId);
                     if (carta.nombre.startsWith("Oro")) {
                         let oroGanado = 0;
-                        if (carta.nombre.includes("(C)")) {
+                        if (carta.nombre.includes("Oro +1/2")) {
                             oroGanado = Math.floor(Math.random() * 2) + 1; // 1 o 2
-                        } else if (carta.nombre.includes("(R)")) {
+                        } else if (carta.nombre.includes("Oro +4/5")) {
                             oroGanado = Math.floor(Math.random() * 2) + 4; // 4 o 5
-                        } else if (carta.nombre.includes("(E)")) {
+                        } else if (carta.nombre.includes("Oro +9/10/11")) {
                             oroGanado = Math.floor(Math.random() * 3) + 9; // 9, 10 o 11
-                        } else if (carta.nombre.includes("(L)")) {
+                        } else if (carta.nombre.includes("Oro +15/16/17")) {
                             oroGanado = Math.floor(Math.random() * 3) + 15; // 15, 16 o 17
                         } else if (carta.nombre.includes("Obtén entre 0 y 20 de oro")) {
                             oroGanado = Math.floor(Math.random() * 21); // 0 a 20
@@ -827,4 +827,3 @@
     </script>
 </body>
 </html>
-```
