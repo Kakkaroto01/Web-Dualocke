@@ -246,6 +246,7 @@
             border: 2px solid #ffcb05;
             max-width: 500px;
             margin: 0 auto;
+            position: relative; /* Para posicionar el texto de versión */
         }
 
         .login-input {
@@ -285,6 +286,16 @@
         .player-name {
             color: #ffcb05;
             font-weight: bold;
+        }
+
+        /* Estilo para el texto de versión */
+        .version-text {
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            font-size: 12px;
+            color: #aaa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         @media (max-width: 1000px) {
@@ -329,8 +340,10 @@
         <!-- Sección de Login -->
         <div id="login-section" class="login-section">
             <div class="login-form">
-                <img src="  https://fontmeme.com/temporary/eef57ca971449a9b9be8269f9210cede.png  " alt="Duallocke Pokemon" class="logo-img">
-                <h1 class="login-title">DUALLOCKE POKEMON</h1>
+                <!-- Imagen del logo -->
+                <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
+                <!-- Texto de versión -->
+                <div class="version-text">versión 1.3</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
