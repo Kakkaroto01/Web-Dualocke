@@ -496,9 +496,9 @@
             { id: 10, nombre: "Oro +9/10/11", tipo: "E" },
             { id: 11, nombre: "Oro +15/16/17", tipo: "L" },
             // Bonus - Rule
-            { id: 12, nombre: "Rule (R)", tipo: "R" },
-            { id: 13, nombre: "Rule (E)", tipo: "E" },
-            { id: 14, nombre: "Rule (L)", tipo: "L" },
+            { id: 12, nombre: "Rule +1 tiradas", tipo: "R" },
+            { id: 13, nombre: "Rule +3 tiradas", tipo: "E" },
+            { id: 14, nombre: "Rule +5 tiradas", tipo: "L" },
             // Bonus - Otros
             { id: 15, nombre: "Liberas Pokémon", tipo: "R" },
             // Otro
@@ -550,8 +550,8 @@
             { id: 10, nombre: "Banda aguante", tipo: "competitivo", precio: 15 },
             { id: 11, nombre: "Botas gruesas", tipo: "competitivo", precio: 15 },
             { id: 12, nombre: "Cinta elección", tipo: "competitivo", precio: 15 },
-            { id: 13, nombre: "gafas elección", tipo: "competitivo", precio: 15 },
-            { id: 14, nombre: "pañuelo elección", tipo: "competitivo", precio: 15 },
+            { id: 13, nombre: "gafas eleccion", tipo: "competitivo", precio: 15 },
+            { id: 14, nombre: "pañuelo eleccion", tipo: "competitivo", precio: 15 },
             { id: 15, nombre: "Hierba blanca", tipo: "competitivo", precio: 15 },
             { id: 16, nombre: "Globo helio", tipo: "competitivo", precio: 15 },
             { id: 17, nombre: "Lodo negro", tipo: "competitivo", precio: 15 },
@@ -628,6 +628,41 @@
             // 1 objeto aleatorio (15 o más)
             { tipo: 'objeto_aleatorio', descripcion: 'Objeto Aleatorio (15+)' }
         ];
+
+        // Función para obtener la URL de la imagen de un objeto
+        function getObjetoImageUrl(nombreObjeto) {
+            // Mapeo de nombres de objetos a URLs de imágenes en GitHub
+            // Asegúrate de reemplazar 'Kakkaroto01', 'Web-Dualocke' y 'Fotos web' por tus valores reales
+            const imageMap = {
+                "Poti": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Poti.png",
+                "Superpoti": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Superpoti.png",
+                "Hyperpoti": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Hyperpoti.png",
+                "Restaurar todito": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Restaurar todito.png",
+                "Cura total": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Cura total.png",
+                "Restos": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Restos.png",
+                "Vidasfera": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Vidasfera.png",
+                "Chaleco asalto": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Chaleco asalto.png",
+                "Casco dentado": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Casco dentado.png",
+                "Banda aguante": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Banda aguante.png",
+                "Botas gruesas": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Botas gruesas.png",
+                "Cinta elección": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Cinta elección.png",
+                "gafas eleccion": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Gafas elección.png",
+                "pañuelo eleccion": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Pañuelo elección.png",
+                "Hierba blanca": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Hierba blanca.png",
+                "Globo helio": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Globo helio.png",
+                "Lodo negro": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Lodo negro.png",
+                "Mineral evolutivo": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Mineral evolutivo.png",
+                "Hierba única": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Hierba única.png",
+                "Llamasfera": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Llamasfera.png",
+                "Toxiesfera": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Toxisfera.png",
+                "Piedra de clima": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Piedra de clima.png",
+                "Megapiedra a elección": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Megapiedra a elección.png",
+                "Capsula habilidad": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Capsula Habilidad.png"
+            };
+
+            // Devuelve la URL si existe, o una imagen genérica si no
+            return imageMap[nombreObjeto] || "https://via.placeholder.com/150/777/ffffff?text=Objeto";
+        }
 
         // Jugador actual
         let jugadorActual = null;
@@ -727,25 +762,26 @@
             
             inventarioUsuario.forEach(item => {
                 let itemInfo;
-                let itemEmoji = '🃏';
+                let itemImageHtml = '<div class="item-image">🧪</div>'; // Imagen por defecto
                 
                 if (tipo === 'cartas') {
                     const carta = cartas.find(c => c.id === item.item_id);
                     itemInfo = carta;
-                    itemEmoji = carta.tipo === 'L' ? '⭐' : carta.tipo === 'E' ? '✨' : carta.tipo === 'R' ? '⚡' : '🔸';
+                    itemImageHtml = `<div class="item-image">${carta.tipo === 'L' ? '⭐' : carta.tipo === 'E' ? '✨' : carta.tipo === 'R' ? '⚡' : '🔸'}</div>`;
                 } else if (tipo === 'sobres') {
                     const sobre = sobres.find(s => s.id === item.item_id);
                     itemInfo = sobre;
-                    itemEmoji = '📦';
+                    itemImageHtml = '<div class="item-image">📦</div>';
                 } else if (tipo === 'objetos') {
                     const obj = objetos.find(o => o.id === item.item_id);
                     itemInfo = obj;
-                    itemEmoji = '🧪';
+                    // Reemplazar la imagen genérica por la específica del objeto
+                    itemImageHtml = `<div class="item-image"><img src="${getObjetoImageUrl(obj.nombre)}" alt="${obj.nombre}" style="width: 100%; height: 100%; object-fit: contain;"></div>`;
                 }
 
                 html += `
                 <div class="item-card">
-                    <div class="item-image">${itemEmoji}</div>
+                    ${itemImageHtml}
                     <div class="item-name">${itemInfo.nombre}</div>
                     <div class="item-quantity">x${item.cantidad}</div>
                     <button class="item-action ${tipo === 'sobres' ? 'sobre' : ''}" 
@@ -919,7 +955,7 @@
             objetos.forEach(objeto => {
                 html += `
                 <div class="item-card">
-                    <div class="item-image">🧪</div>
+                    <div class="item-image"><img src="${getObjetoImageUrl(objeto.nombre)}" alt="${objeto.nombre}" style="width: 100%; height: 100%; object-fit: contain;"></div>
                     <div class="item-name">${objeto.nombre}</div>
                     <div class="item-quantity">${objeto.precio} <img src="https://static.wikia.nocookie.net/pokemongohelp/images/9/99/Pokecoin1.png/revision/latest?cb=20160923165335" width="16" height="16"> </div>
                     <button class="item-action" onclick="comprarItem('objetos', ${objeto.id})">Comprar</button>
