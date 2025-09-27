@@ -416,7 +416,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión -->
-                <div class="version-text">versión 2.1</div>
+                <div class="version-text">versión 2.2</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -496,9 +496,9 @@
             { id: 10, nombre: "Oro +9/10/11", tipo: "E" },
             { id: 11, nombre: "Oro +15/16/17", tipo: "L" },
             // Bonus - Rule
-            { id: 12, nombre: "Rule +1 tiradas", tipo: "R" },
-            { id: 13, nombre: "Rule +3 tiradas", tipo: "E" },
-            { id: 14, nombre: "Rule +5 tiradas", tipo: "L" },
+            { id: 12, nombre: "Rule (R)", tipo: "R" },
+            { id: 13, nombre: "Rule (E)", tipo: "E" },
+            { id: 14, nombre: "Rule (L)", tipo: "L" },
             // Bonus - Otros
             { id: 15, nombre: "Liberas Pokémon", tipo: "R" },
             // Otro
@@ -535,6 +535,7 @@
             { id: 5, nombre: "Sobre gym", cartas: 2, probabilidades: { C: 65, R: 25, E: 7, L: 3 }, precio: 0 }
         ];
 
+        // Objetos sin "Botas gruesas"
         const objetos = [
             // Curativos
             { id: 1, nombre: "Poti", tipo: "curativo", precio: 2 },
@@ -548,7 +549,7 @@
             { id: 8, nombre: "Chaleco asalto", tipo: "competitivo", precio: 15 },
             { id: 9, nombre: "Casco dentado", tipo: "competitivo", precio: 15 },
             { id: 10, nombre: "Banda aguante", tipo: "competitivo", precio: 15 },
-            { id: 11, nombre: "Botas gruesas", tipo: "competitivo", precio: 15 },
+            // ID 11 ("Botas gruesas") eliminado
             { id: 12, nombre: "Cinta elección", tipo: "competitivo", precio: 15 },
             { id: 13, nombre: "gafas eleccion", tipo: "competitivo", precio: 15 },
             { id: 14, nombre: "pañuelo eleccion", tipo: "competitivo", precio: 15 },
@@ -644,7 +645,7 @@
                 "Chaleco asalto": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Chaleco asalto.png",
                 "Casco dentado": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Casco dentado.png",
                 "Banda aguante": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Banda aguante.png",
-                "Botas gruesas": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Botas gruesas.png",
+                // "Botas gruesas" eliminado de aquí también
                 "Cinta elección": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Cinta elección.png",
                 "gafas eleccion": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Gafas elección.png",
                 "pañuelo eleccion": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Pañuelo elección.png",
