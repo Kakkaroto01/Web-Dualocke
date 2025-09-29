@@ -327,87 +327,6 @@
             font-weight: bold;
         }
 
-        /* Estilos para la ruleta circular */
-        .ruleta-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            margin: 20px auto;
-            aspect-ratio: 1;
-        }
-
-        .ruleta-circle {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            border-radius: 50%;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            transform: rotate(0deg); /* Para simular el giro, aunque no lo hagamos realmente */
-        }
-
-        .ruleta-segment {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 50%;
-            height: 50%;
-            transform-origin: 0% 100%;
-            clip-path: polygon(0 0, 100% 0, 100% 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: bold;
-            color: #000;
-            text-align: center;
-            padding: 5px;
-            word-wrap: break-word;
-        }
-
-        .ruleta-segment span {
-            transform: rotate(-90deg);
-            display: inline-block;
-            width: 100%;
-        }
-
-        /* Colores para los segmentos de la ruleta */
-        .segment-vacio { background-color: #7f8c8d; } /* Gris */
-        .segment-oro { background-color: #f1c40f; } /* Dorado */
-        .segment-sobre-comun { background-color: #2ecc71; } /* Verde */
-        .segment-sobre-raro { background-color: #3498db; } /* Azul */
-        .segment-sobre-epico { background-color: #9b59b6; } /* Morado */
-        .segment-sobre-legendario { background-color: #e74c3c; } /* Rojo */
-        .segment-objeto { background-color: #e67e22; } /* Naranja */
-
-        /* Botón de play en el centro */
-        .ruleta-play-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            background: #fff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            z-index: 10;
-            cursor: pointer;
-        }
-
-        .ruleta-play-btn::before {
-            content: '';
-            width: 0;
-            height: 0;
-            border-top: 15px solid transparent;
-            border-bottom: 15px solid transparent;
-            border-left: 20px solid #000;
-            margin-left: 5px;
-        }
-
         /* Efectos visuales para la ruleta */
         /* Efecto para premios raros (Sobre Épico, Sobre Legendario, Objeto Aleatorio 15+) */
         .premio-raro {
@@ -497,7 +416,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión -->
-                <div class="version-text">versión 2.6</div>
+                <div class="version-text">versión 2.3</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -551,14 +470,6 @@
             <div id="ruleta" class="section">
                 <h2 class="section-title">RULETA</h2>
                 <div class="ruleta-container">
-                    <!-- Visualización de la ruleta circular -->
-                    <div class="ruleta-wrapper">
-                        <div class="ruleta-circle" id="ruleta-circle">
-                            <!-- Segmentos de la ruleta (se generarán dinámicamente) -->
-                        </div>
-                        <div class="ruleta-play-btn" onclick="girarRuleta()"></div>
-                    </div>
-                    
                     <button class="ruleta-btn" onclick="girarRuleta()">GIRAR RULETA</button>
                     <div id="ruleta-result" class="ruleta-result"></div>
                 </div>
@@ -624,6 +535,7 @@
             { id: 5, nombre: "Sobre gym", cartas: 2, probabilidades: { C: 65, R: 25, E: 7, L: 3 }, precio: 0 }
         ];
 
+        // Objetos sin "Botas gruesas"
         const objetos = [
             // Curativos
             { id: 1, nombre: "Poti", tipo: "curativo", precio: 2 },
@@ -721,31 +633,32 @@
         // Función para obtener la URL de la imagen de un objeto
         function getObjetoImageUrl(nombreObjeto) {
             // Mapeo de nombres de objetos a URLs de imágenes en GitHub
+            // Asegúrate de reemplazar 'Kakkaroto01', 'Web-Dualocke' y 'Fotos web' por tus valores reales
             const imageMap = {
-                "Poti": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Poti.png",
-                "Superpoti": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Superpoti.png",
-                "Hyperpoti": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Hyperpoti.png",
-                "Restaurar todito": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Restaurar%20todito.png",
-                "Cura total": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Cura%20total.png",
-                "Restos": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Restos.png",
-                "Vidasfera": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Vidasfera.png",
-                "Chaleco asalto": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Chaleco%20asalto.png",
-                "Casco dentado": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Casco%20dentado.png",
-                "Banda aguante": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Banda%20aguante.png",
+                "Poti": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Poti.png",
+                "Superpoti": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Superpoti.png",
+                "Hyperpoti": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Hyperpoti.png",
+                "Restaurar todito": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Restaurar todito.png",
+                "Cura total": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Cura total.png",
+                "Restos": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Restos.png",
+                "Vidasfera": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Vidasfera.png",
+                "Chaleco asalto": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Chaleco asalto.png",
+                "Casco dentado": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Casco dentado.png",
+                "Banda aguante": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Banda aguante.png",
                 // "Botas gruesas" eliminado de aquí también
-                "Cinta elección": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Cinta%20elección.png",
-                "gafas eleccion": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Gafas%20elección.png",
-                "pañuelo eleccion": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Pañuelo%20elección.png",
-                "Hierba blanca": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Hierba%20blanca.png",
-                "Globo helio": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Globo%20helio.png",
-                "Lodo negro": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Lodo%20negro.png",
-                "Mineral evolutivo": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Mineral%20evolutivo.png",
-                "Hierba única": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Hierba%20única.png",
-                "Llamasfera": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Llamasfera.png",
-                "Toxiesfera": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Toxisfera.png",
-                "Piedra de clima": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Piedra%20de%20clima.png",
-                "Megapiedra a elección": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Megapiedra%20a%20elección.png",
-                "Capsula habilidad": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Capsula%20Habilidad.png"
+                "Cinta elección": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Cinta elección.png",
+                "gafas eleccion": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Gafas elección.png",
+                "pañuelo eleccion": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Pañuelo elección.png",
+                "Hierba blanca": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Hierba blanca.png",
+                "Globo helio": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Globo helio.png",
+                "Lodo negro": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Lodo negro.png",
+                "Mineral evolutivo": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Mineral evolutivo.png",
+                "Hierba única": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Hierba única.png",
+                "Llamasfera": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Llamasfera.png",
+                "Toxiesfera": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Toxisfera.png",
+                "Piedra de clima": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Piedra de clima.png",
+                "Megapiedra a elección": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Megapiedra a elección.png",
+                "Capsula habilidad": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Capsula Habilidad.png"
             };
 
             // Devuelve la URL si existe, o una imagen genérica si no
@@ -769,7 +682,7 @@
                 jugador = {
                     id: Date.now(),
                     nombre: nombre,
-                    monedas: 100, // Monedas iniciales
+                    monedas: 10, // Monedas iniciales
                     inventario: [] // Inventario vacío
                 };
             }
@@ -816,8 +729,6 @@
                 // Si es la ruleta, limpiar el resultado anterior
                 if (target === 'ruleta') {
                     document.getElementById('ruleta-result').textContent = '';
-                    // Generar la ruleta visual
-                    generarRuletaVisual();
                 }
             });
         });
@@ -1101,50 +1012,6 @@
             mostrarTienda();
             
             alert(`¡Has comprado ${item.nombre} por ${precio} Pokecoins!`);
-        }
-
-        // Generar la ruleta visual
-        function generarRuletaVisual() {
-            const ruletaCircle = document.getElementById('ruleta-circle');
-            ruletaCircle.innerHTML = ''; // Limpiar el contenido anterior
-            
-            // Calcular el ángulo por segmento
-            const segmentAngle = 360 / 50; // 50 casillas
-            
-            // Crear cada segmento
-            ruletaConfig.forEach((casilla, index) => {
-                const segment = document.createElement('div');
-                segment.className = `ruleta-segment`;
-                
-                // Asignar clase de color según el tipo de casilla
-                if (casilla.tipo === 'vacio') {
-                    segment.classList.add('segment-vacio');
-                } else if (casilla.tipo === 'oro') {
-                    segment.classList.add('segment-oro');
-                } else if (casilla.tipo === 'sobre') {
-                    if (casilla.id === 1) {
-                        segment.classList.add('segment-sobre-comun');
-                    } else if (casilla.id === 2) {
-                        segment.classList.add('segment-sobre-raro');
-                    } else if (casilla.id === 3) {
-                        segment.classList.add('segment-sobre-epico');
-                    } else if (casilla.id === 4) {
-                        segment.classList.add('segment-sobre-legendario');
-                    }
-                } else if (casilla.tipo === 'objeto_aleatorio') {
-                    segment.classList.add('segment-objeto');
-                }
-                
-                // Aplicar rotación al segmento
-                segment.style.transform = `rotate(${index * segmentAngle}deg)`;
-                
-                // Añadir el texto del premio
-                const span = document.createElement('span');
-                span.textContent = casilla.descripcion;
-                segment.appendChild(span);
-                
-                ruletaCircle.appendChild(segment);
-            });
         }
 
         // Ruleta
