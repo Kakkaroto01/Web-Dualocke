@@ -327,40 +327,86 @@
             font-weight: bold;
         }
 
-        /* Estilo para la visualización de la ruleta */
-        .ruleta-grid {
-            display: grid;
-            grid-template-columns: repeat(10, 1fr); /* 10 columnas */
-            gap: 5px;
-            max-width: 800px; /* Ancho máximo para centrar */
-            margin: 20px auto; /* Centrado */
+        /* Estilos para la ruleta circular */
+        .ruleta-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            aspect-ratio: 1;
         }
 
-        .ruleta-cell {
-            aspect-ratio: 1; /* Cuadrado */
-            border: 1px solid #333;
+        .ruleta-circle {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            transform: rotate(0deg); /* Para simular el giro, aunque no lo hagamos realmente */
+        }
+
+        .ruleta-segment {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 50%;
+            transform-origin: 0% 100%;
+            clip-path: polygon(0 0, 100% 0, 100% 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px; /* Tamaño de fuente pequeño */
+            font-size: 14px;
+            font-weight: bold;
+            color: #000;
             text-align: center;
-            padding: 2px;
-            word-break: break-word; /* Rompe palabras largas si es necesario */
-            overflow: hidden;
+            padding: 5px;
+            word-wrap: break-word;
         }
 
-        /* Colores para cada tipo de casilla */
-        .ruleta-vacio { background-color: #7f8c8d; }
-        .ruleta-oro-1 { background-color: #f1c40f; } /* Dorado para +1 oro */
-        .ruleta-oro-3 { background-color: #f1c40f; } /* Dorado para +3 oro */
-        .ruleta-oro-5 { background-color: #f1c40f; } /* Dorado para +5 oro */
-        .ruleta-oro-7 { background-color: #f1c40f; } /* Dorado para +7 oro */
-        .ruleta-sobre-comun { background-color: #2ecc71; } /* Verde para sobre común */
-        .ruleta-sobre-raro { background-color: #3498db; } /* Azul para sobre raro */
-        .ruleta-sobre-epico { background-color: #9b59b6; } /* Morado para sobre épico */
-        .ruleta-sobre-legendario { background-color: #e74c3c; } /* Rojo para sobre legendario */
-        .ruleta-objeto { background-color: #e67e22; } /* Naranja para objeto aleatorio */
+        .ruleta-segment span {
+            transform: rotate(-90deg);
+            display: inline-block;
+            width: 100%;
+        }
 
+        /* Colores para los segmentos de la ruleta */
+        .segment-vacio { background-color: #7f8c8d; } /* Gris */
+        .segment-oro { background-color: #f1c40f; } /* Dorado */
+        .segment-sobre-comun { background-color: #2ecc71; } /* Verde */
+        .segment-sobre-raro { background-color: #3498db; } /* Azul */
+        .segment-sobre-epico { background-color: #9b59b6; } /* Morado */
+        .segment-sobre-legendario { background-color: #e74c3c; } /* Rojo */
+        .segment-objeto { background-color: #e67e22; } /* Naranja */
+
+        /* Botón de play en el centro */
+        .ruleta-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        .ruleta-play-btn::before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-left: 20px solid #000;
+            margin-left: 5px;
+        }
 
         /* Efectos visuales para la ruleta */
         /* Efecto para premios raros (Sobre Épico, Sobre Legendario, Objeto Aleatorio 15+) */
@@ -451,7 +497,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión -->
-                <div class="version-text">versión 2.4</div>
+                <div class="version-text">versión 2.5</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -505,77 +551,12 @@
             <div id="ruleta" class="section">
                 <h2 class="section-title">RULETA</h2>
                 <div class="ruleta-container">
-                    <!-- Visualización de la ruleta -->
-                    <div class="ruleta-grid">
-                        <!-- Casillas vacías (13) -->
-                        <div class="ruleta-cell ruleta-vacio">Nada</div>
-                        <div class="ruleta-cell ruleta-vacio">Nada</div>
-                        <div class="ruleta-cell ruleta-vacio">Nada</div>
-                        <div class="ruleta-cell ruleta-vacio">Nada</div>
-                        <div class="ruleta-cell ruleta-vacio">Nada</div>
-                        <div class="ruleta-cell ruleta-vacio">Nada</div>
-                        <div class="ruleta-cell ruleta-vacio">Nada</div>
-                        <div class="ruleta-cell ruleta-vacio">Nada</div>
-                        <div class="ruleta-cell ruleta-vacio">Nada</div>
-                        <div class="ruleta-cell ruleta-vacio">Nada</div>
-                        <div class="ruleta-cell ruleta-vacio">Nada</div>
-                        <div class="ruleta-cell ruleta-vacio">Nada</div>
-                        <div class="ruleta-cell ruleta-vacio">Nada</div>
-                        
-                        <!-- Oro +1 (10) -->
-                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
-                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
-                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
-                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
-                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
-                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
-                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
-                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
-                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
-                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
-                        
-                        <!-- Oro +3 (5) -->
-                        <div class="ruleta-cell ruleta-oro-3">+3 Oro</div>
-                        <div class="ruleta-cell ruleta-oro-3">+3 Oro</div>
-                        <div class="ruleta-cell ruleta-oro-3">+3 Oro</div>
-                        <div class="ruleta-cell ruleta-oro-3">+3 Oro</div>
-                        <div class="ruleta-cell ruleta-oro-3">+3 Oro</div>
-                        
-                        <!-- Oro +5 (5) -->
-                        <div class="ruleta-cell ruleta-oro-5">+5 Oro</div>
-                        <div class="ruleta-cell ruleta-oro-5">+5 Oro</div>
-                        <div class="ruleta-cell ruleta-oro-5">+5 Oro</div>
-                        <div class="ruleta-cell ruleta-oro-5">+5 Oro</div>
-                        <div class="ruleta-cell ruleta-oro-5">+5 Oro</div>
-                        
-                        <!-- Oro +7 (2) -->
-                        <div class="ruleta-cell ruleta-oro-7">+7 Oro</div>
-                        <div class="ruleta-cell ruleta-oro-7">+7 Oro</div>
-                        
-                        <!-- Sobre Común (5) -->
-                        <div class="ruleta-cell ruleta-sobre-comun">Sobre Común</div>
-                        <div class="ruleta-cell ruleta-sobre-comun">Sobre Común</div>
-                        <div class="ruleta-cell ruleta-sobre-comun">Sobre Común</div>
-                        <div class="ruleta-cell ruleta-sobre-comun">Sobre Común</div>
-                        <div class="ruleta-cell ruleta-sobre-comun">Sobre Común</div>
-                        
-                        <!-- Sobre Raro (5) -->
-                        <div class="ruleta-cell ruleta-sobre-raro">Sobre Raro</div>
-                        <div class="ruleta-cell ruleta-sobre-raro">Sobre Raro</div>
-                        <div class="ruleta-cell ruleta-sobre-raro">Sobre Raro</div>
-                        <div class="ruleta-cell ruleta-sobre-raro">Sobre Raro</div>
-                        <div class="ruleta-cell ruleta-sobre-raro">Sobre Raro</div>
-                        
-                        <!-- Sobre Épico (3) -->
-                        <div class="ruleta-cell ruleta-sobre-epico">Sobre Épico</div>
-                        <div class="ruleta-cell ruleta-sobre-epico">Sobre Épico</div>
-                        <div class="ruleta-cell ruleta-sobre-epico">Sobre Épico</div>
-                        
-                        <!-- Sobre Legendario (1) -->
-                        <div class="ruleta-cell ruleta-sobre-legendario">Sobre Legendario</div>
-                        
-                        <!-- Objeto Aleatorio (1) -->
-                        <div class="ruleta-cell ruleta-objeto">Objeto Aleatorio</div>
+                    <!-- Visualización de la ruleta circular -->
+                    <div class="ruleta-wrapper">
+                        <div class="ruleta-circle" id="ruleta-circle">
+                            <!-- Segmentos de la ruleta (se generarán dinámicamente) -->
+                        </div>
+                        <div class="ruleta-play-btn" onclick="girarRuleta()"></div>
                     </div>
                     
                     <button class="ruleta-btn" onclick="girarRuleta()">GIRAR RULETA</button>
@@ -835,6 +816,8 @@
                 // Si es la ruleta, limpiar el resultado anterior
                 if (target === 'ruleta') {
                     document.getElementById('ruleta-result').textContent = '';
+                    // Generar la ruleta visual
+                    generarRuletaVisual();
                 }
             });
         });
@@ -1118,6 +1101,50 @@
             mostrarTienda();
             
             alert(`¡Has comprado ${item.nombre} por ${precio} Pokecoins!`);
+        }
+
+        // Generar la ruleta visual
+        function generarRuletaVisual() {
+            const ruletaCircle = document.getElementById('ruleta-circle');
+            ruletaCircle.innerHTML = ''; // Limpiar el contenido anterior
+            
+            // Calcular el ángulo por segmento
+            const segmentAngle = 360 / 50; // 50 casillas
+            
+            // Crear cada segmento
+            ruletaConfig.forEach((casilla, index) => {
+                const segment = document.createElement('div');
+                segment.className = `ruleta-segment`;
+                
+                // Asignar clase de color según el tipo de casilla
+                if (casilla.tipo === 'vacio') {
+                    segment.classList.add('segment-vacio');
+                } else if (casilla.tipo === 'oro') {
+                    segment.classList.add('segment-oro');
+                } else if (casilla.tipo === 'sobre') {
+                    if (casilla.id === 1) {
+                        segment.classList.add('segment-sobre-comun');
+                    } else if (casilla.id === 2) {
+                        segment.classList.add('segment-sobre-raro');
+                    } else if (casilla.id === 3) {
+                        segment.classList.add('segment-sobre-epico');
+                    } else if (casilla.id === 4) {
+                        segment.classList.add('segment-sobre-legendario');
+                    }
+                } else if (casilla.tipo === 'objeto_aleatorio') {
+                    segment.classList.add('segment-objeto');
+                }
+                
+                // Aplicar rotación al segmento
+                segment.style.transform = `rotate(${index * segmentAngle}deg)`;
+                
+                // Añadir el texto del premio
+                const span = document.createElement('span');
+                span.textContent = casilla.descripcion;
+                segment.appendChild(span);
+                
+                ruletaCircle.appendChild(segment);
+            });
         }
 
         // Ruleta
