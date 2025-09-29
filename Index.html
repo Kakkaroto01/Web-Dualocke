@@ -327,6 +327,41 @@
             font-weight: bold;
         }
 
+        /* Estilo para la visualización de la ruleta */
+        .ruleta-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr); /* 10 columnas */
+            gap: 5px;
+            max-width: 800px; /* Ancho máximo para centrar */
+            margin: 20px auto; /* Centrado */
+        }
+
+        .ruleta-cell {
+            aspect-ratio: 1; /* Cuadrado */
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px; /* Tamaño de fuente pequeño */
+            text-align: center;
+            padding: 2px;
+            word-break: break-word; /* Rompe palabras largas si es necesario */
+            overflow: hidden;
+        }
+
+        /* Colores para cada tipo de casilla */
+        .ruleta-vacio { background-color: #7f8c8d; }
+        .ruleta-oro-1 { background-color: #f1c40f; } /* Dorado para +1 oro */
+        .ruleta-oro-3 { background-color: #f1c40f; } /* Dorado para +3 oro */
+        .ruleta-oro-5 { background-color: #f1c40f; } /* Dorado para +5 oro */
+        .ruleta-oro-7 { background-color: #f1c40f; } /* Dorado para +7 oro */
+        .ruleta-sobre-comun { background-color: #2ecc71; } /* Verde para sobre común */
+        .ruleta-sobre-raro { background-color: #3498db; } /* Azul para sobre raro */
+        .ruleta-sobre-epico { background-color: #9b59b6; } /* Morado para sobre épico */
+        .ruleta-sobre-legendario { background-color: #e74c3c; } /* Rojo para sobre legendario */
+        .ruleta-objeto { background-color: #e67e22; } /* Naranja para objeto aleatorio */
+
+
         /* Efectos visuales para la ruleta */
         /* Efecto para premios raros (Sobre Épico, Sobre Legendario, Objeto Aleatorio 15+) */
         .premio-raro {
@@ -416,7 +451,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión -->
-                <div class="version-text">versión 2.3</div>
+                <div class="version-text">versión 2.4</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -470,6 +505,79 @@
             <div id="ruleta" class="section">
                 <h2 class="section-title">RULETA</h2>
                 <div class="ruleta-container">
+                    <!-- Visualización de la ruleta -->
+                    <div class="ruleta-grid">
+                        <!-- Casillas vacías (13) -->
+                        <div class="ruleta-cell ruleta-vacio">Nada</div>
+                        <div class="ruleta-cell ruleta-vacio">Nada</div>
+                        <div class="ruleta-cell ruleta-vacio">Nada</div>
+                        <div class="ruleta-cell ruleta-vacio">Nada</div>
+                        <div class="ruleta-cell ruleta-vacio">Nada</div>
+                        <div class="ruleta-cell ruleta-vacio">Nada</div>
+                        <div class="ruleta-cell ruleta-vacio">Nada</div>
+                        <div class="ruleta-cell ruleta-vacio">Nada</div>
+                        <div class="ruleta-cell ruleta-vacio">Nada</div>
+                        <div class="ruleta-cell ruleta-vacio">Nada</div>
+                        <div class="ruleta-cell ruleta-vacio">Nada</div>
+                        <div class="ruleta-cell ruleta-vacio">Nada</div>
+                        <div class="ruleta-cell ruleta-vacio">Nada</div>
+                        
+                        <!-- Oro +1 (10) -->
+                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
+                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
+                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
+                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
+                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
+                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
+                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
+                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
+                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
+                        <div class="ruleta-cell ruleta-oro-1">+1 Oro</div>
+                        
+                        <!-- Oro +3 (5) -->
+                        <div class="ruleta-cell ruleta-oro-3">+3 Oro</div>
+                        <div class="ruleta-cell ruleta-oro-3">+3 Oro</div>
+                        <div class="ruleta-cell ruleta-oro-3">+3 Oro</div>
+                        <div class="ruleta-cell ruleta-oro-3">+3 Oro</div>
+                        <div class="ruleta-cell ruleta-oro-3">+3 Oro</div>
+                        
+                        <!-- Oro +5 (5) -->
+                        <div class="ruleta-cell ruleta-oro-5">+5 Oro</div>
+                        <div class="ruleta-cell ruleta-oro-5">+5 Oro</div>
+                        <div class="ruleta-cell ruleta-oro-5">+5 Oro</div>
+                        <div class="ruleta-cell ruleta-oro-5">+5 Oro</div>
+                        <div class="ruleta-cell ruleta-oro-5">+5 Oro</div>
+                        
+                        <!-- Oro +7 (2) -->
+                        <div class="ruleta-cell ruleta-oro-7">+7 Oro</div>
+                        <div class="ruleta-cell ruleta-oro-7">+7 Oro</div>
+                        
+                        <!-- Sobre Común (5) -->
+                        <div class="ruleta-cell ruleta-sobre-comun">Sobre Común</div>
+                        <div class="ruleta-cell ruleta-sobre-comun">Sobre Común</div>
+                        <div class="ruleta-cell ruleta-sobre-comun">Sobre Común</div>
+                        <div class="ruleta-cell ruleta-sobre-comun">Sobre Común</div>
+                        <div class="ruleta-cell ruleta-sobre-comun">Sobre Común</div>
+                        
+                        <!-- Sobre Raro (5) -->
+                        <div class="ruleta-cell ruleta-sobre-raro">Sobre Raro</div>
+                        <div class="ruleta-cell ruleta-sobre-raro">Sobre Raro</div>
+                        <div class="ruleta-cell ruleta-sobre-raro">Sobre Raro</div>
+                        <div class="ruleta-cell ruleta-sobre-raro">Sobre Raro</div>
+                        <div class="ruleta-cell ruleta-sobre-raro">Sobre Raro</div>
+                        
+                        <!-- Sobre Épico (3) -->
+                        <div class="ruleta-cell ruleta-sobre-epico">Sobre Épico</div>
+                        <div class="ruleta-cell ruleta-sobre-epico">Sobre Épico</div>
+                        <div class="ruleta-cell ruleta-sobre-epico">Sobre Épico</div>
+                        
+                        <!-- Sobre Legendario (1) -->
+                        <div class="ruleta-cell ruleta-sobre-legendario">Sobre Legendario</div>
+                        
+                        <!-- Objeto Aleatorio (1) -->
+                        <div class="ruleta-cell ruleta-objeto">Objeto Aleatorio</div>
+                    </div>
+                    
                     <button class="ruleta-btn" onclick="girarRuleta()">GIRAR RULETA</button>
                     <div id="ruleta-result" class="ruleta-result"></div>
                 </div>
@@ -535,7 +643,6 @@
             { id: 5, nombre: "Sobre gym", cartas: 2, probabilidades: { C: 65, R: 25, E: 7, L: 3 }, precio: 0 }
         ];
 
-        // Objetos sin "Botas gruesas"
         const objetos = [
             // Curativos
             { id: 1, nombre: "Poti", tipo: "curativo", precio: 2 },
@@ -633,32 +740,31 @@
         // Función para obtener la URL de la imagen de un objeto
         function getObjetoImageUrl(nombreObjeto) {
             // Mapeo de nombres de objetos a URLs de imágenes en GitHub
-            // Asegúrate de reemplazar 'Kakkaroto01', 'Web-Dualocke' y 'Fotos web' por tus valores reales
             const imageMap = {
-                "Poti": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Poti.png",
-                "Superpoti": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Superpoti.png",
-                "Hyperpoti": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Hyperpoti.png",
-                "Restaurar todito": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Restaurar todito.png",
-                "Cura total": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Cura total.png",
-                "Restos": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Restos.png",
-                "Vidasfera": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Vidasfera.png",
-                "Chaleco asalto": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Chaleco asalto.png",
-                "Casco dentado": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Casco dentado.png",
-                "Banda aguante": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Banda aguante.png",
+                "Poti": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Poti.png",
+                "Superpoti": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Superpoti.png",
+                "Hyperpoti": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Hyperpoti.png",
+                "Restaurar todito": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Restaurar%20todito.png",
+                "Cura total": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Cura%20total.png",
+                "Restos": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Restos.png",
+                "Vidasfera": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Vidasfera.png",
+                "Chaleco asalto": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Chaleco%20asalto.png",
+                "Casco dentado": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Casco%20dentado.png",
+                "Banda aguante": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Banda%20aguante.png",
                 // "Botas gruesas" eliminado de aquí también
-                "Cinta elección": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Cinta elección.png",
-                "gafas eleccion": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Gafas elección.png",
-                "pañuelo eleccion": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Pañuelo elección.png",
-                "Hierba blanca": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Hierba blanca.png",
-                "Globo helio": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Globo helio.png",
-                "Lodo negro": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Lodo negro.png",
-                "Mineral evolutivo": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Mineral evolutivo.png",
-                "Hierba única": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Hierba única.png",
-                "Llamasfera": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Llamasfera.png",
-                "Toxiesfera": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Toxisfera.png",
-                "Piedra de clima": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Piedra de clima.png",
-                "Megapiedra a elección": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Megapiedra a elección.png",
-                "Capsula habilidad": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Capsula Habilidad.png"
+                "Cinta elección": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Cinta%20elección.png",
+                "gafas eleccion": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Gafas%20elección.png",
+                "pañuelo eleccion": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Pañuelo%20elección.png",
+                "Hierba blanca": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Hierba%20blanca.png",
+                "Globo helio": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Globo%20helio.png",
+                "Lodo negro": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Lodo%20negro.png",
+                "Mineral evolutivo": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Mineral%20evolutivo.png",
+                "Hierba única": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Hierba%20única.png",
+                "Llamasfera": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Llamasfera.png",
+                "Toxiesfera": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Toxisfera.png",
+                "Piedra de clima": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Piedra%20de%20clima.png",
+                "Megapiedra a elección": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Megapiedra%20a%20elección.png",
+                "Capsula habilidad": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos%20web/Capsula%20Habilidad.png"
             };
 
             // Devuelve la URL si existe, o una imagen genérica si no
@@ -682,7 +788,7 @@
                 jugador = {
                     id: Date.now(),
                     nombre: nombre,
-                    monedas: 10, // Monedas iniciales
+                    monedas: 100, // Monedas iniciales
                     inventario: [] // Inventario vacío
                 };
             }
