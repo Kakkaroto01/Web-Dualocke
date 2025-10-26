@@ -360,7 +360,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión -->
-                <div class="version-text">versión 2.4</div>
+                <div class="version-text">versión 2.5</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -413,8 +413,54 @@
         </div>
     </div>
     <script>
-        // Variables globales para almacenar los datos cargados
-        let cartas = []; // Array vacío inicialmente
+        // Datos actualizados
+        const cartas = [
+            // Ataque
+            { id: 1, nombre: "Impides a tu rival capturar ese pokemon", tipo: "E" },
+            { id: 2, nombre: "Obligas a tu rival a cambiar de pokemon de ruta", tipo: "R" },
+            { id: 3, nombre: "Libera un pokemon usado en ese gym para matar un pokemon del rival", tipo: "E" },
+            { id: 4, nombre: "Matar un pokemon usado en ese gym para liberar un pokemon del rival", tipo: "L" },
+            { id: 5, nombre: "Intercambia un pokemon de tu equipo con uno de tu rival", tipo: "E" },
+            { id: 6, nombre: "Roba un pokemon", tipo: "L" },
+            // Defensa
+            { id: 7, nombre: "Relincho", tipo: "E" },
+            // Bonus - Oro
+            { id: 8, nombre: "Oro +1/2", tipo: "C" },
+            { id: 9, nombre: "Oro +4/5", tipo: "R" },
+            { id: 10, nombre: "Oro +9/10/11", tipo: "E" },
+            { id: 11, nombre: "Oro +15/16/17", tipo: "L" },
+            // Bonus - Rule
+            { id: 12, nombre: "Rule (R)", tipo: "R" },
+            { id: 13, nombre: "Rule (E)", tipo: "E" },
+            { id: 14, nombre: "Rule (L)", tipo: "L" },
+            // Bonus - Otros
+            { id: 15, nombre: "Liberas un Pokémon para revivir otro", tipo: "R" },
+            // Otro
+            { id: 16, nombre: "Revive un pokemon", tipo: "E" },
+            { id: 17, nombre: "Libera un pokemon para revivir otro pokemon", tipo: "R" },
+            { id: 18, nombre: "Capturar otro pokemon de ruta extra", tipo: "R" },
+            { id: 19, nombre: "Cambiar de pokemon de ruta", tipo: "C" },
+            { id: 20, nombre: "Ganas una poti", tipo: "C" },
+            { id: 21, nombre: "Ganas una superpoti", tipo: "C" },
+            { id: 22, nombre: "Gana un totem de inmortalidad(objeto random)", tipo: "R" },
+            { id: 23, nombre: "Puedes comprar cualquier objeto curativo", tipo: "R" },
+            { id: 24, nombre: "3 Puedes comprar cualquier objeto curativo", tipo: "E" },
+            { id: 25, nombre: "Ambos jugadores pueden comprar una poti", tipo: "C" },
+            { id: 26, nombre: "Haz un pokemon shiny", tipo: "R" },
+            { id: 27, nombre: "Cambia la naturaleza de un pokemon", tipo: "R" },
+            { id: 28, nombre: "Intercambia las habilidades de 2 de tus pokemon", tipo: "L" },
+            { id: 29, nombre: "Pon a 31 IV's 1 estadística", tipo: "E" },
+            { id: 30, nombre: "Libera un Pokémon por cada 2 estadísticas que quieras a 31 IV's", tipo: "E" },
+            { id: 31, nombre: "Obtienes una masterball", tipo: "E" },
+            { id: 32, nombre: "Robas 2 objetos curativos del rival", tipo: "R" },
+            { id: 33, nombre: "Obliga a tu rival a retar al líder con 1 pokemon menos", tipo: "E" },
+            { id: 34, nombre: "Libera un shiny por 10 monedas", tipo: "R" },
+            { id: 35, nombre: "Obtén entre 0 y 20 de oro", tipo: "E" },
+            { id: 36, nombre: "Si tu inicial no ha participado y no ha muerto en los 4 primeros gym 31 IV's en todo", tipo: "R" },
+            { id: 37, nombre: "Consigue un item competitivo aleatorio", tipo: "E" },
+            { id: 38, nombre: "Puedes subir a 31 IV's una estadística a un shiny", tipo: "R" },
+            { id: 39, nombre: "Consigue un item competitivo de tu elección", tipo: "L" }
+        ];
         const sobres = [
             { id: 1, nombre: "Sobre común", cartas: 2, probabilidades: { C: 80, R: 15, E: 4, L: 1 }, precio: 5 },
             { id: 2, nombre: "Sobre raro", cartas: 3, probabilidades: { C: 50, R: 35, E: 10, L: 5 }, precio: 10 },
@@ -515,23 +561,6 @@
             // 1 objeto aleatorio (15 o más)
             { tipo: 'objeto_aleatorio', descripcion: 'Objeto Aleatorio (15+)' }
         ];
-
-        // Función para cargar las cartas desde el archivo JSON
-        async function cargarCartas() {
-            try {
-                const response = await fetch('cartas.json');
-                if (!response.ok) {
-                    throw new Error(`Error al cargar cartas.json: ${response.status} ${response.statusText}`);
-                }
-                cartas = await response.json();
-                console.log("Cartas cargadas desde JSON:", cartas); // Opcional: para depuración
-            } catch (error) {
-                console.error("Error al cargar las cartas:", error);
-                // Opcional: Mostrar un mensaje al usuario o cargar un array vacío/por defecto
-                // cartas = []; // O un array con valores por defecto si falla
-            }
-        }
-
         // Función para obtener la URL de la imagen de un objeto
         function getObjetoImageUrl(nombreObjeto) {
             // Mapeo de nombres de objetos a URLs de imágenes en GitHub
@@ -565,26 +594,15 @@
             // Devuelve la URL si existe, o una imagen genérica si no
             return imageMap[nombreObjeto] || "https://via.placeholder.com/150/777/ffffff?text=Objeto";
         }
-
         // Jugador actual
         let jugadorActual = null;
-
         // Login de jugador
-        async function login() {
+        function login() {
             const nombre = document.getElementById('player-name').value.trim();
             if (!nombre) {
                 alert('Por favor ingresa tu nombre de entrenador');
                 return;
             }
-
-            // Cargar las cartas antes de continuar
-            await cargarCartas();
-            // Opcional: verificar si la carga fue exitosa antes de continuar
-            if (cartas.length === 0) {
-                 alert("Error crítico: No se pudieron cargar las cartas. La aplicación no puede continuar.");
-                 return; // Salir si no se cargaron las cartas
-            }
-
             // Recuperar jugador de localStorage o crear nuevo
             let jugador = JSON.parse(localStorage.getItem('jugador_' + nombre));
             if (!jugador) {
@@ -600,19 +618,17 @@
             document.getElementById('game-section').style.display = 'block';
             document.getElementById('player-name-display').textContent = jugadorActual.nombre;
             actualizarMonedas();
+            // Mostrar la sección de inventario por defecto (cartas)
             mostrarInventario('cartas');
         }
-
         // Guardar jugador en localStorage
         function guardarJugador() {
             localStorage.setItem('jugador_' + jugadorActual.nombre, JSON.stringify(jugadorActual));
         }
-
         // Actualizar monedas en pantalla
         function actualizarMonedas() {
             document.getElementById('monedas-count').textContent = jugadorActual.monedas;
         }
-
         // Navegación entre secciones
         document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -635,7 +651,6 @@
                 }
             });
         });
-
         // Cambiar entre tipos de inventario
         document.querySelectorAll('.inventory-type-btn').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -647,7 +662,6 @@
                 mostrarInventario(tipo);
             });
         });
-
         // Mostrar inventario
         function mostrarInventario(tipo) {
             if (!jugadorActual) return;
@@ -662,11 +676,10 @@
                 let itemInfo;
                 let itemImageHtml = '<div class="item-image">🧪</div>'; // Imagen por defecto
                 if (tipo === 'cartas') {
-                    // Buscar la carta usando el array global 'cartas' ya cargado
                     const carta = cartas.find(c => c.id === item.item_id);
                     if (!carta) {
-                        console.error(`Carta con ID ${item.item_id} no encontrada en el array global 'cartas'.`);
-                        return; // O manejar el error como prefieras
+                         console.error(`Carta con ID ${item.item_id} no encontrada.`);
+                         return; // O manejar el error como prefieras
                     }
                     itemInfo = carta;
                     itemImageHtml = `<div class="item-image">${carta.tipo === 'L' ? '⭐' : carta.tipo === 'E' ? '✨' : carta.tipo === 'R' ? '⚡' : '🔸'}</div>`;
@@ -695,7 +708,6 @@
             html += '</div>';
             display.innerHTML = html;
         }
-
         // Abrir sobre
         function abrirSobre(sobreId) {
             if (!jugadorActual) return;
@@ -723,14 +735,12 @@
                 // Si es sobre legendario, tiene contenido fijo
                 if (sobre.contenido) {
                     const tipoCarta = sobre.contenido[i];
-                    // Usar el array global 'cartas' para filtrar
                     const cartasDelTipo = cartas.filter(c => c.tipo === tipoCarta);
                     if (cartasDelTipo.length > 0) { // Asegurarse de que hay cartas disponibles
                         const cartaSeleccionada = cartasDelTipo[Math.floor(Math.random() * cartasDelTipo.length)];
                         nuevasCartas.push(cartaSeleccionada);
                     } else {
                         console.warn(`No hay cartas disponibles del tipo '${tipoCarta}' para el sobre legendario.`);
-                        // Opcional: asignar una carta por defecto o manejar el error
                     }
                 } else {
                     // Seleccionar tipo de carta según probabilidades
@@ -744,14 +754,12 @@
                             break;
                         }
                     }
-                    // Usar el array global 'cartas' para filtrar
                     const cartasDelTipo = cartas.filter(c => c.tipo === tipoCarta);
                     if (cartasDelTipo.length > 0) { // Asegurarse de que hay cartas disponibles
                         const cartaSeleccionada = cartasDelTipo[Math.floor(Math.random() * cartasDelTipo.length)];
                         nuevasCartas.push(cartaSeleccionada);
                     } else {
                         console.warn(`No hay cartas disponibles del tipo '${tipoCarta}' para el sobre normal.`);
-                        // Opcional: asignar una carta por defecto o manejar el error
                     }
                 }
             }
@@ -781,7 +789,6 @@ ${nuevasCartas.map(c => c.nombre).join('
                 mostrarInventario('sobres');
             }
         }
-
         // Usar item
         function usarItem(itemId, tipo) {
             if (!jugadorActual) return;
@@ -797,11 +804,10 @@ ${nuevasCartas.map(c => c.nombre).join('
                 }
                 // Lógica especial para cartas
                 if (tipo === 'cartas') {
-                    // Usar el array global 'cartas' para encontrar la carta
                     const carta = cartas.find(c => c.id === itemId);
                     if (!carta) {
-                        console.error(`Carta con ID ${itemId} no encontrada para usar.`);
-                        return;
+                         console.error(`Carta con ID ${itemId} no encontrada para usar.`);
+                         return; // O manejar el error como prefieras
                     }
                     if (carta.nombre.startsWith("Oro")) {
                         let oroGanado = 0;
@@ -834,7 +840,6 @@ ${nuevasCartas.map(c => c.nombre).join('
                 mostrarInventario(tipo);
             }
         }
-
         // Mostrar tienda
         function mostrarTienda() {
             const display = document.getElementById('tienda-content');
@@ -863,7 +868,6 @@ ${nuevasCartas.map(c => c.nombre).join('
             });
             display.innerHTML = html;
         }
-
         // Comprar item
         function comprarItem(tipo, itemId) {
             if (!jugadorActual) return;
@@ -901,7 +905,6 @@ ${nuevasCartas.map(c => c.nombre).join('
             mostrarTienda();
             alert(`¡Has comprado ${item.nombre} por ${precio} Pokecoins!`);
         }
-
         // Ruleta
         function girarRuleta() {
             if (!jugadorActual) return;
