@@ -6,12 +6,14 @@
     <title>Duallocke Pokemon</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
         body {
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
                         url('https://www.gratistodo.com/wp-content/uploads/2016/09/Pokemon-6.jpg');
@@ -22,6 +24,7 @@
             padding: 20px;
             color: #fff;
         }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -31,6 +34,7 @@
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
             border: 2px solid #ffcb05;
         }
+
         header {
             display: flex;
             justify-content: space-between;
@@ -39,6 +43,7 @@
             border-bottom: 2px solid #ffcb05;
             margin-bottom: 20px;
         }
+
         .logo {
             /* Eliminado el texto "DUALLOCKE POKEMON" */
             display: flex;
@@ -47,10 +52,12 @@
             width: 100%; /* Asegura que ocupe todo el ancho disponible */
             padding: 10px 0; /* Espaciado vertical */
         }
+
         .logo img {
             height: 60px; /* Reducido el tamaño para que quepa adecuadamente */
             /* El logo ya está centrado gracias a justify-content: center */
         }
+
         .coins {
             display: flex;
             align-items: center;
@@ -59,10 +66,12 @@
             font-weight: bold;
             color: #ffde59;
         }
+
         .coins img {
             width: 40px;
             height: 40px;
         }
+
         .nav-bar {
             display: flex;
             justify-content: center;
@@ -73,6 +82,7 @@
             border-radius: 10px;
             border: 1px solid #ffcb05;
         }
+
         .nav-btn {
             background: none;
             border: none;
@@ -84,22 +94,27 @@
             transition: all 0.3s ease;
             font-weight: bold;
         }
+
         .nav-btn:hover {
             color: #ffcb05;
             text-decoration: underline;
         }
+
         .nav-btn.active {
             color: #ffcb05;
             text-decoration: underline;
         }
+
         .section {
             display: none;
             padding: 20px;
             min-height: 400px;
         }
+
         .section.active {
             display: block;
         }
+
         .section-title {
             font-family: 'Press Start 2P', cursive;
             color: #ffcb05;
@@ -108,12 +123,14 @@
             font-size: 24px;
             text-shadow: 0 0 5px rgba(255, 203, 5, 0.5);
         }
+
         .inventory-types {
             display: flex;
             justify-content: center;
             gap: 20px;
             margin-bottom: 20px;
         }
+
         .inventory-type-btn {
             background: rgba(50, 50, 50, 0.7);
             border: 1px solid #ffcb05;
@@ -123,17 +140,20 @@
             cursor: pointer;
             transition: all 0.3s;
         }
+
         .inventory-type-btn.active {
             background: #ffcb05;
             color: #000;
             font-weight: bold;
         }
+
         .items-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
             margin-top: 20px;
         }
+
         .item-card {
             background: rgba(40, 40, 40, 0.9);
             border: 2px solid #ffcb05;
@@ -142,10 +162,12 @@
             text-align: center;
             transition: transform 0.3s;
         }
+
         .item-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 5px 15px rgba(255, 203, 5, 0.3);
         }
+
         .item-image {
             width: 100%;
             height: 150px;
@@ -159,16 +181,19 @@
             color: #ffcb05;
             border: 1px solid #555;
         }
+
         .item-name {
             font-weight: bold;
             margin-bottom: 5px;
             color: #fff;
         }
+
         .item-quantity {
             color: #ffcb05;
             font-weight: bold;
             margin-bottom: 10px;
         }
+
         .item-action {
             background: #27ae60;
             color: white;
@@ -180,15 +205,19 @@
             font-weight: bold;
             transition: background 0.3s;
         }
+
         .item-action:hover {
             background: #219653;
         }
+
         .item-action.sobre {
             background: #3498db;
         }
+
         .item-action.sobre:hover {
             background: #2980b9;
         }
+
         .empty-message {
             text-align: center;
             font-size: 18px;
@@ -196,10 +225,12 @@
             padding: 40px;
             font-style: italic;
         }
+
         .login-section {
             text-align: center;
             padding: 40px;
         }
+
         .login-title {
             font-family: 'Press Start 2P', cursive;
             color: #ffcb05;
@@ -207,6 +238,7 @@
             font-size: 28px;
             text-shadow: 0 0 10px rgba(255, 203, 5, 0.7);
         }
+
         .login-form {
             background: rgba(30, 30, 30, 0.9);
             padding: 30px;
@@ -216,6 +248,7 @@
             margin: 0 auto;
             position: relative; /* Para posicionar el texto de versión */
         }
+
         .login-input {
             width: 100%;
             padding: 15px;
@@ -226,6 +259,7 @@
             color: #fff;
             font-size: 16px;
         }
+
         .login-btn {
             background: #ffcb05;
             color: #000;
@@ -238,18 +272,22 @@
             margin-top: 10px;
             transition: background 0.3s;
         }
+
         .login-btn:hover {
             background: #ffd700;
         }
+
         .player-info {
             text-align: center;
             margin: 20px 0;
             font-size: 18px;
         }
+
         .player-name {
             color: #ffcb05;
             font-weight: bold;
         }
+
         /* Estilo para el texto de versión */
         .version-text {
             position: absolute;
@@ -259,10 +297,12 @@
             color: #aaa;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
         /* Estilo específico para la ruleta */
         .ruleta-container {
             text-align: center;
         }
+
         .ruleta-btn {
             background: #e74c3c;
             color: white;
@@ -275,15 +315,18 @@
             margin-top: 20px;
             transition: background 0.3s;
         }
+
         .ruleta-btn:hover {
             background: #c0392b;
         }
+
         .ruleta-result {
             margin-top: 20px;
             font-size: 20px;
             color: #ffcb05;
             font-weight: bold;
         }
+
         /* Efectos visuales para la ruleta */
         /* Efecto para premios raros (Sobre Épico, Sobre Legendario, Objeto Aleatorio 15+) */
         .premio-raro {
@@ -291,60 +334,73 @@
             color: #9b59b6; /* Púrpura para rareza */
             font-weight: bold;
         }
+
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
             20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
+
         @keyframes glowRare {
             0% { text-shadow: 0 0 5px #fff; }
             50% { text-shadow: 0 0 20px #9b59b6, 0 0 30px #9b59b6; }
             100% { text-shadow: 0 0 5px #fff; }
         }
+
         /* Efecto para premios muy raros (Sobre Legendario, Oro alto) */
         .premio-muy-raro {
             animation: shake 0.5s ease-in-out, glowVeryRare 1.2s ease-out;
             color: #f1c40f; /* Amarillo dorado para muy raro */
             font-weight: bold;
         }
+
         @keyframes glowVeryRare {
             0% { text-shadow: 0 0 5px #fff; }
             50% { text-shadow: 0 0 20px #f1c40f, 0 0 30px #f1c40f, 0 0 40px #f1c40f; }
             100% { text-shadow: 0 0 5px #fff; }
         }
+
         /* Efecto para premios comunes (Oro bajo, Sobre Común) */
         .premio-comun {
             animation: fadeIn 0.3s ease-out;
             color: #ddd; /* Gris claro para común */
         }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
+
         @media (max-width: 1000px) {
             .items-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
         }
+
         @media (max-width: 768px) {
             .items-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            
             .nav-bar {
                 flex-wrap: wrap;
             }
+            
             .coins {
                 font-size: 16px;
             }
+            
             .coins img {
                 width: 30px;
                 height: 30px;
             }
         }
+
         @media (max-width: 480px) {
             .items-grid {
                 grid-template-columns: 1fr;
             }
+            
             .nav-btn {
                 padding: 8px 12px;
                 font-size: 14px;
@@ -360,11 +416,12 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión -->
-                <div class="version-text">versión 2.5</div>
+                <div class="version-text">versión 2.4</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
         </div>
+
         <!-- Sección Principal del Juego -->
         <div id="game-section" style="display: none;">
             <header>
@@ -377,24 +434,30 @@
                     <span id="monedas-count">0</span>
                 </div>
             </header>
+
             <div class="player-info">
                 <p>Bienvenido, <span class="player-name" id="player-name-display"></span></p>
             </div>
+
             <div class="nav-bar">
                 <button class="nav-btn active" data-target="inventario">Inventario📖</button>
                 <button class="nav-btn" data-target="tienda">Tienda🛒</button>
                 <button class="nav-btn" data-target="ruleta">Ruleta🎰</button> <!-- Nuevo botón -->
             </div>
+
             <!-- Sección de Inventario -->
             <div id="inventario" class="section active">
                 <h2 class="section-title">INVENTARIO</h2>
+                
                 <div class="inventory-types">
                     <button class="inventory-type-btn active" data-type="cartas">Cartas</button>
                     <button class="inventory-type-btn" data-type="sobres">Sobres</button>
                     <button class="inventory-type-btn" data-type="objetos">Objetos</button>
                 </div>
+                
                 <div id="inventario-content"></div>
             </div>
+
             <!-- Sección de Tienda -->
             <div id="tienda" class="section">
                 <h2 class="section-title">TIENDA</h2>
@@ -402,6 +465,7 @@
                     <!-- Los items de la tienda se generarán aquí -->
                 </div>
             </div>
+
             <!-- Sección de Ruleta -->
             <div id="ruleta" class="section">
                 <h2 class="section-title">RULETA</h2>
@@ -410,8 +474,10 @@
                     <div id="ruleta-result" class="ruleta-result"></div>
                 </div>
             </div>
+
         </div>
     </div>
+
     <script>
         // Datos actualizados
         const cartas = [
@@ -461,6 +527,7 @@
             { id: 38, nombre: "Puedes subir a 31 IV's una estadística a un shiny", tipo: "R" },
             { id: 39, nombre: "Consigue un item competitivo de tu elección", tipo: "L" }
         ];
+
         const sobres = [
             { id: 1, nombre: "Sobre común", cartas: 2, probabilidades: { C: 80, R: 15, E: 4, L: 1 }, precio: 5 },
             { id: 2, nombre: "Sobre raro", cartas: 3, probabilidades: { C: 50, R: 35, E: 10, L: 5 }, precio: 10 },
@@ -468,6 +535,7 @@
             { id: 4, nombre: "Sobre legendario", cartas: 2, contenido: ["L", "E"], precio: 20 },
             { id: 5, nombre: "Sobre gym", cartas: 2, probabilidades: { C: 65, R: 25, E: 7, L: 3 }, precio: 0 }
         ];
+
         // Objetos sin "Botas gruesas"
         const objetos = [
             // Curativos
@@ -498,6 +566,7 @@
             { id: 23, nombre: "Megapiedra a elección", tipo: "otro", precio: 25 },
             { id: 24, nombre: "Capsula habilidad", tipo: "otro", precio: 15 }
         ];
+
         // Configuración de la Ruleta
         const ruletaConfig = [
             // 13 vacíos
@@ -561,6 +630,7 @@
             // 1 objeto aleatorio (15 o más)
             { tipo: 'objeto_aleatorio', descripcion: 'Objeto Aleatorio (15+)' }
         ];
+
         // Función para obtener la URL de la imagen de un objeto
         function getObjetoImageUrl(nombreObjeto) {
             // Mapeo de nombres de objetos a URLs de imágenes en GitHub
@@ -591,11 +661,14 @@
                 "Megapiedra a elección": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Megapiedra a elección.png",
                 "Capsula habilidad": "https://raw.githubusercontent.com/Kakkaroto01/Web-Dualocke/main/Fotos web/Capsula Habilidad.png"
             };
+
             // Devuelve la URL si existe, o una imagen genérica si no
             return imageMap[nombreObjeto] || "https://via.placeholder.com/150/777/ffffff?text=Objeto";
         }
+
         // Jugador actual
         let jugadorActual = null;
+
         // Login de jugador
         function login() {
             const nombre = document.getElementById('player-name').value.trim();
@@ -603,6 +676,7 @@
                 alert('Por favor ingresa tu nombre de entrenador');
                 return;
             }
+
             // Recuperar jugador de localStorage o crear nuevo
             let jugador = JSON.parse(localStorage.getItem('jugador_' + nombre));
             if (!jugador) {
@@ -613,34 +687,42 @@
                     inventario: [] // Inventario vacío
                 };
             }
+
             jugadorActual = jugador;
+            
             document.getElementById('login-section').style.display = 'none';
             document.getElementById('game-section').style.display = 'block';
+            
             document.getElementById('player-name-display').textContent = jugadorActual.nombre;
             actualizarMonedas();
-            // Mostrar la sección de inventario por defecto (cartas)
             mostrarInventario('cartas');
         }
+
         // Guardar jugador en localStorage
         function guardarJugador() {
             localStorage.setItem('jugador_' + jugadorActual.nombre, JSON.stringify(jugadorActual));
         }
+
         // Actualizar monedas en pantalla
         function actualizarMonedas() {
             document.getElementById('monedas-count').textContent = jugadorActual.monedas;
         }
+
         // Navegación entre secciones
         document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const target = this.getAttribute('data-target');
+                
                 // Actualizar botones de navegación
                 document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
+                
                 // Mostrar sección correspondiente
                 document.querySelectorAll('.section').forEach(section => {
                     section.classList.remove('active');
                 });
                 document.getElementById(target).classList.add('active');
+                
                 // Si es la tienda, mostrar los items
                 if (target === 'tienda') {
                     mostrarTienda();
@@ -651,36 +733,41 @@
                 }
             });
         });
+
         // Cambiar entre tipos de inventario
         document.querySelectorAll('.inventory-type-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const tipo = this.getAttribute('data-type');
+                
                 // Actualizar botones de tipo de inventario
                 document.querySelectorAll('.inventory-type-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
+                
                 // Mostrar inventario del tipo seleccionado
                 mostrarInventario(tipo);
             });
         });
+
         // Mostrar inventario
         function mostrarInventario(tipo) {
             if (!jugadorActual) return;
+
             const inventarioUsuario = jugadorActual.inventario.filter(item => item.tipo_item === tipo);
             const display = document.getElementById('inventario-content');
+            
             if (inventarioUsuario.length === 0) {
                 display.innerHTML = '<div class="empty-message">No tienes items en este inventario</div>';
                 return;
             }
+
             let html = '<div class="items-grid">';
+            
             inventarioUsuario.forEach(item => {
                 let itemInfo;
                 let itemImageHtml = '<div class="item-image">🧪</div>'; // Imagen por defecto
+                
                 if (tipo === 'cartas') {
                     const carta = cartas.find(c => c.id === item.item_id);
-                    if (!carta) {
-                         console.error(`Carta con ID ${item.item_id} no encontrada.`);
-                         return; // O manejar el error como prefieras
-                    }
                     itemInfo = carta;
                     itemImageHtml = `<div class="item-image">${carta.tipo === 'L' ? '⭐' : carta.tipo === 'E' ? '✨' : carta.tipo === 'R' ? '⚡' : '🔸'}</div>`;
                 } else if (tipo === 'sobres') {
@@ -693,6 +780,7 @@
                     // Reemplazar la imagen genérica por la específica del objeto
                     itemImageHtml = `<div class="item-image"><img src="${getObjetoImageUrl(obj.nombre)}" alt="${obj.nombre}" style="width: 100%; height: 100%; object-fit: contain;"></div>`;
                 }
+
                 html += `
                 <div class="item-card">
                     ${itemImageHtml}
@@ -705,20 +793,25 @@
                 </div>
                 `;
             });
+            
             html += '</div>';
             display.innerHTML = html;
         }
+
         // Abrir sobre
         function abrirSobre(sobreId) {
             if (!jugadorActual) return;
+
             // Verificar si tiene el sobre
             const sobreEnInventario = jugadorActual.inventario.find(item => 
                 item.tipo_item === 'sobres' && item.item_id === sobreId
             );
+
             if (!sobreEnInventario || sobreEnInventario.cantidad <= 0) {
                 alert('No tienes este sobre para abrir.');
                 return;
             }
+
             // Restar un sobre del inventario
             sobreEnInventario.cantidad--;
             if (sobreEnInventario.cantidad <= 0) {
@@ -726,22 +819,21 @@
                     item => !(item.tipo_item === 'sobres' && item.item_id === sobreId)
                 );
             }
+
             // Generar cartas aleatorias basadas en el sobre
             const nuevasCartas = [];
             const sobre = sobres.find(s => s.id === sobreId);
+            
             // Determinar cantidad de cartas según tipo de sobre
             const cantidadCartas = sobre.cartas;
+            
             for (let i = 0; i < cantidadCartas; i++) {
                 // Si es sobre legendario, tiene contenido fijo
                 if (sobre.contenido) {
                     const tipoCarta = sobre.contenido[i];
                     const cartasDelTipo = cartas.filter(c => c.tipo === tipoCarta);
-                    if (cartasDelTipo.length > 0) { // Asegurarse de que hay cartas disponibles
-                        const cartaSeleccionada = cartasDelTipo[Math.floor(Math.random() * cartasDelTipo.length)];
-                        nuevasCartas.push(cartaSeleccionada);
-                    } else {
-                        console.warn(`No hay cartas disponibles del tipo '${tipoCarta}' para el sobre legendario.`);
-                    }
+                    const cartaSeleccionada = cartasDelTipo[Math.floor(Math.random() * cartasDelTipo.length)];
+                    nuevasCartas.push(cartaSeleccionada);
                 } else {
                     // Seleccionar tipo de carta según probabilidades
                     const rand = Math.random() * 100;
@@ -754,20 +846,19 @@
                             break;
                         }
                     }
+                    
                     const cartasDelTipo = cartas.filter(c => c.tipo === tipoCarta);
-                    if (cartasDelTipo.length > 0) { // Asegurarse de que hay cartas disponibles
-                        const cartaSeleccionada = cartasDelTipo[Math.floor(Math.random() * cartasDelTipo.length)];
-                        nuevasCartas.push(cartaSeleccionada);
-                    } else {
-                        console.warn(`No hay cartas disponibles del tipo '${tipoCarta}' para el sobre normal.`);
-                    }
+                    const cartaSeleccionada = cartasDelTipo[Math.floor(Math.random() * cartasDelTipo.length)];
+                    nuevasCartas.push(cartaSeleccionada);
                 }
             }
+
             // Añadir cartas al inventario
             nuevasCartas.forEach(carta => {
                 const cartaExistente = jugadorActual.inventario.find(item => 
                     item.tipo_item === 'cartas' && item.item_id === carta.id
                 );
+
                 if (cartaExistente) {
                     cartaExistente.cantidad++;
                 } else {
@@ -778,23 +869,27 @@
                     });
                 }
             });
-            alert(`¡Has abierto un sobre y obtenido:
-${nuevasCartas.map(c => c.nombre).join('
-')}`);
+
+            alert(`¡Has abierto un sobre y obtenido:\n${nuevasCartas.map(c => c.nombre).join('\n')}`);
             guardarJugador();
+            
             // Actualizar vista de inventario
             mostrarInventario('cartas');
+            
             // Si estábamos en la vista de sobres, actualizamos también
             if (document.querySelector('.inventory-type-btn.active').getAttribute('data-type') === 'sobres') {
                 mostrarInventario('sobres');
             }
         }
+
         // Usar item
         function usarItem(itemId, tipo) {
             if (!jugadorActual) return;
+
             const itemEnInventario = jugadorActual.inventario.find(item => 
                 item.tipo_item === tipo && item.item_id === itemId
             );
+
             if (itemEnInventario) {
                 itemEnInventario.cantidad--;
                 if (itemEnInventario.cantidad <= 0) {
@@ -802,13 +897,10 @@ ${nuevasCartas.map(c => c.nombre).join('
                         item => !(item.tipo_item === tipo && item.item_id === itemId)
                     );
                 }
+                
                 // Lógica especial para cartas
                 if (tipo === 'cartas') {
                     const carta = cartas.find(c => c.id === itemId);
-                    if (!carta) {
-                         console.error(`Carta con ID ${itemId} no encontrada para usar.`);
-                         return; // O manejar el error como prefieras
-                    }
                     if (carta.nombre.startsWith("Oro")) {
                         let oroGanado = 0;
                         if (carta.nombre.includes("Oro +1/2")) {
@@ -834,16 +926,21 @@ ${nuevasCartas.map(c => c.nombre).join('
                 } else {
                     alert('¡Item usado correctamente!');
                 }
+                
                 guardarJugador();
                 actualizarMonedas();
+                
                 // Actualizar vista de inventario
                 mostrarInventario(tipo);
             }
         }
+
         // Mostrar tienda
         function mostrarTienda() {
             const display = document.getElementById('tienda-content');
+            
             let html = '';
+            
             // Sobres disponibles
             sobres.forEach(sobre => {
                 html += `
@@ -855,6 +952,7 @@ ${nuevasCartas.map(c => c.nombre).join('
                 </div>
                 `;
             });
+
             // Objetos disponibles
             objetos.forEach(objeto => {
                 html += `
@@ -866,13 +964,17 @@ ${nuevasCartas.map(c => c.nombre).join('
                 </div>
                 `;
             });
+
             display.innerHTML = html;
         }
+
         // Comprar item
         function comprarItem(tipo, itemId) {
             if (!jugadorActual) return;
+
             let item;
             let precio;
+
             if (tipo === 'sobres') {
                 item = sobres.find(s => s.id === itemId);
                 precio = item.precio;
@@ -880,16 +982,20 @@ ${nuevasCartas.map(c => c.nombre).join('
                 item = objetos.find(o => o.id === itemId);
                 precio = item.precio;
             }
+
             if (jugadorActual.monedas < precio) {
                 alert('No tienes suficientes Pokecoins');
                 return;
             }
+
             // Restar monedas
             jugadorActual.monedas -= precio;
+
             // Añadir item al inventario
             const itemExistente = jugadorActual.inventario.find(i => 
                 i.tipo_item === tipo && i.item_id === itemId
             );
+
             if (itemExistente) {
                 itemExistente.cantidad++;
             } else {
@@ -899,20 +1005,27 @@ ${nuevasCartas.map(c => c.nombre).join('
                     cantidad: 1
                 });
             }
+
             guardarJugador();
             actualizarMonedas();
+            
             // Actualizar vista de tienda
             mostrarTienda();
+            
             alert(`¡Has comprado ${item.nombre} por ${precio} Pokecoins!`);
         }
+
         // Ruleta
         function girarRuleta() {
             if (!jugadorActual) return;
+
             // Seleccionar una casilla aleatoria
             const casilla = ruletaConfig[Math.floor(Math.random() * ruletaConfig.length)];
             const resultDiv = document.getElementById('ruleta-result');
+
             // Limpiar efectos anteriores
             resultDiv.className = 'ruleta-result'; // Vuelve a la clase base
+
             if (casilla.tipo === 'vacio') {
                 const mensaje = `¡Oh vaya! ${casilla.descripcion}.`;
                 resultDiv.textContent = mensaje;
@@ -924,6 +1037,7 @@ ${nuevasCartas.map(c => c.nombre).join('
                 actualizarMonedas();
                 const mensaje = `¡Felicidades! Ganaste ${casilla.cantidad} monedas.`;
                 resultDiv.textContent = mensaje;
+
                 // Aplicar efecto según cantidad de oro
                 if (casilla.cantidad >= 7) {
                     resultDiv.classList.add('premio-muy-raro');
@@ -954,6 +1068,7 @@ ${nuevasCartas.map(c => c.nombre).join('
                 guardarJugador();
                 const mensaje = `¡Felicidades! Ganaste un ${sobre.nombre}.`;
                 resultDiv.textContent = mensaje;
+
                 // Aplicar efecto según tipo de sobre (basado en ID o precio)
                 if (sobre.id === 4) { // Sobre legendario
                     resultDiv.classList.add('premio-muy-raro');
@@ -977,6 +1092,7 @@ ${nuevasCartas.map(c => c.nombre).join('
                 }
                 // Seleccionar un objeto aleatorio de los elegibles
                 const objetoSeleccionado = objetosElegibles[Math.floor(Math.random() * objetosElegibles.length)];
+                
                 const itemExistente = jugadorActual.inventario.find(i => 
                     i.tipo_item === 'objetos' && i.item_id === objetoSeleccionado.id
                 );
