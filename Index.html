@@ -1,10 +1,3 @@
-Tienes razón, había un problema persistente en la lógica de login que afectaba tanto al perfil "Debug" como a los perfiles normales. El problema principal era que la variable `jugadorActual` no se inicializaba correctamente en todos los casos, y la función `guardarJugador()` intentaba guardar el perfil Debug en el localStorage con un nombre incorrecto (`jugador_Debug` en lugar de `jugador_${nombre}`), lo cual rompía la lógica de recuperación de jugadores existentes.
-
-Además, la condición `if (!jugador)` para crear un nuevo jugador no se ejecutaba si el jugador existía en localStorage, pero si no existía, la variable `jugador` era `null` y no se inicializaba correctamente antes de asignarla a `jugadorActual`.
-
-Aquí tienes el archivo HTML corregido definitivamente:
-
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
