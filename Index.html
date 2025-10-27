@@ -671,6 +671,7 @@
 
         // Función para crear perfil de prueba
         function crearPerfilPrueba() {
+            console.log("Creando perfil de prueba...");
             // Crear perfil con 990 monedas
             let perfilPrueba = {
                 id: Date.now(),
@@ -679,39 +680,128 @@
                 inventario: []
             };
             
-            // Añadir 10 de cada item/carta/pack al inventario
-            const todosItems = [
-                ...itemsDisponibles.map(item => ({...item, tipo: 'items'})),
-                ...cartasDisponibles.map(carta => ({...carta, tipo: 'cartas'})),
-                ...packsDisponibles.map(pack => ({...pack, tipo: 'packs'}))
-            ];
-            
-            todosItems.forEach(item => {
+            // Añadir 10 de cada carta al inventario
+            cartas.forEach(carta => {
                 perfilPrueba.inventario.push({
-                    id: item.id,
-                    nombre: item.nombre,
-                    tipo: item.tipo,
-                    cantidad: 10, // 10 unidades de cada item
-                    precio: item.precio
+                    id: carta.id,
+                    nombre: carta.nombre,
+                    tipo: 'cartas',
+                    cantidad: 10, // 10 unidades de cada carta
+                    rareza: carta.tipo
                 });
             });
             
+            // Añadir 10 de cada sobre al inventario
+            sobres.forEach(sobre => {
+                perfilPrueba.inventario.push({
+                    id: sobre.id,
+                    nombre: sobre.nombre,
+                    tipo: 'sobres',
+                    cantidad: 10, // 10 unidades de cada sobre
+                    precio: sobre.precio
+                });
+            });
+            
+            // Añadir 10 de cada objeto al inventario
+            objetos.forEach(objeto => {
+                perfilPrueba.inventario.push({
+                    id: objeto.id,
+                    nombre: objeto.nombre,
+                    tipo: 'objetos',
+                    cantidad: 10, // 10 unidades de cada objeto
+                    precio: objeto.precio
+                });
+            });
+            
+            console.log("Perfil de prueba creado:", perfilPrueba);
             return perfilPrueba;
         }
         
         // Función para activar el perfil de prueba al hacer clic en la versión
         function activarPerfilPrueba() {
-            jugadorActual = crearPerfilPrueba();
-            
-            document.getElementById('login-section').style.display = 'none';
-            document.getElementById('game-section').style.display = 'block';
-            
-            document.getElementById('player-name-display').textContent = jugadorActual.nombre;
-            actualizarMonedas();
-            mostrarInventario('cartas');
-            
-            // Mostrar mensaje de confirmación
-            alert('¡Perfil de prueba activado! Tienes 990 monedas y x10 de cada item/carta/pack.');
+            console.log("Activando perfil de prueba...");
+            try {
+                // Crear perfil con 990 monedas directamente
+                jugadorActual = {
+                    id: Date.now(),
+                    nombre: "Debug",
+                    monedas: 990,
+                    inventario: []
+                };
+                
+                // Añadir 10 de cada carta, sobre y objeto directamente
+                for (let i = 0; i < cartas.length; i++) {
+                    jugadorActual.inventario.push({
+                        id: cartas[i].id,
+                        nombre: cartas[i].nombre,
+                        tipo: 'cartas',
+                        cantidad: 10,
+                        rareza: cartas[i].tipo
+                    });
+                }
+                
+                for (let i = 0; i < sobres.length; i++) {
+                    jugadorActual.inventario.push({
+                        id: sobres[i].id,
+                        nombre: sobres[i].nombre,
+                        tipo: 'sobres',
+                        cantidad: 10,
+                        precio: sobres[i].precio
+                    });
+                }
+                
+                for (let i = 0; i < objetos.length; i++) {
+                    jugadorActual.inventario.push({
+                        id: objetos[i].id,
+                        nombre: objetos[i].nombre,
+                        tipo: 'objetos',
+                        cantidad: 10,
+                        precio: objetos[i].precio
+                    });
+                }
+                
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('game-section').style.display = 'block';
+                
+                document.getElementById('player-name-display').textContent = jugadorActual.nombre;
+                document.getElementById('monedas-count').textContent = jugadorActual.monedas;
+                
+                // Mostrar inventario manualmente
+                const inventarioContent = document.getElementById('inventario-content');
+                inventarioContent.innerHTML = '';
+                
+                const cartasInventario = jugadorActual.inventario.filter(item => item.tipo === 'cartas');
+                
+                if (cartasInventario.length > 0) {
+                    const itemsGrid = document.createElement('div');
+                    itemsGrid.className = 'items-grid';
+                    
+                    for (let i = 0; i < cartasInventario.length; i++) {
+                        const carta = cartasInventario[i];
+                        const itemCard = document.createElement('div');
+                        itemCard.className = 'item-card';
+                        itemCard.innerHTML = `
+                            <div class="item-image">${carta.rareza || '?'}</div>
+                            <div class="item-name">${carta.nombre}</div>
+                            <div class="item-quantity">Cantidad: ${carta.cantidad}</div>
+                        `;
+                        itemsGrid.appendChild(itemCard);
+                    }
+                    
+                    inventarioContent.appendChild(itemsGrid);
+                } else {
+                    inventarioContent.innerHTML = '<div class="empty-message">No tienes cartas en tu inventario</div>';
+                }
+                
+                // Guardar en localStorage para mantener la sesión
+                localStorage.setItem('jugador_Debug', JSON.stringify(jugadorActual));
+                
+                // Mostrar mensaje de confirmación
+                alert('¡Perfil de prueba activado! Tienes 990 monedas y x10 de cada item/carta/pack.');
+            } catch (error) {
+                console.error("Error al activar perfil de prueba:", error);
+                alert("Error al activar el perfil de prueba. Consulta la consola para más detalles.");
+            }
         }
         
         // Login de jugador
@@ -724,7 +814,86 @@
             
             // Verificar si es el perfil de prueba "Debug"
             if (nombre === "Debug") {
-                jugadorActual = crearPerfilPrueba();
+                console.log("Activando modo Debug...");
+                // Crear perfil con 990 monedas directamente
+                jugadorActual = {
+                    id: Date.now(),
+                    nombre: "Debug",
+                    monedas: 990,
+                    inventario: []
+                };
+                
+                // Añadir 10 de cada carta, sobre y objeto directamente
+                for (let i = 0; i < cartas.length; i++) {
+                    jugadorActual.inventario.push({
+                        id: cartas[i].id,
+                        nombre: cartas[i].nombre,
+                        tipo: 'cartas',
+                        cantidad: 10,
+                        rareza: cartas[i].tipo
+                    });
+                }
+                
+                for (let i = 0; i < sobres.length; i++) {
+                    jugadorActual.inventario.push({
+                        id: sobres[i].id,
+                        nombre: sobres[i].nombre,
+                        tipo: 'sobres',
+                        cantidad: 10,
+                        precio: sobres[i].precio
+                    });
+                }
+                
+                for (let i = 0; i < objetos.length; i++) {
+                    jugadorActual.inventario.push({
+                        id: objetos[i].id,
+                        nombre: objetos[i].nombre,
+                        tipo: 'objetos',
+                        cantidad: 10,
+                        precio: objetos[i].precio
+                    });
+                }
+                
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('game-section').style.display = 'block';
+                
+                document.getElementById('player-name-display').textContent = jugadorActual.nombre;
+                document.getElementById('monedas-count').textContent = jugadorActual.monedas;
+                
+                // Mostrar inventario manualmente
+                const inventarioContent = document.getElementById('inventario-content');
+                inventarioContent.innerHTML = '';
+                
+                const cartasInventario = jugadorActual.inventario.filter(item => item.tipo === 'cartas');
+                
+                if (cartasInventario.length > 0) {
+                    const itemsGrid = document.createElement('div');
+                    itemsGrid.className = 'items-grid';
+                    
+                    for (let i = 0; i < cartasInventario.length; i++) {
+                        const carta = cartasInventario[i];
+                        const itemCard = document.createElement('div');
+                        itemCard.className = 'item-card';
+                        itemCard.innerHTML = `
+                            <div class="item-image">${carta.rareza || '?'}</div>
+                            <div class="item-name">${carta.nombre}</div>
+                            <div class="item-quantity">Cantidad: ${carta.cantidad}</div>
+                        `;
+                        itemsGrid.appendChild(itemCard);
+                    }
+                    
+                    inventarioContent.appendChild(itemsGrid);
+                } else {
+                    inventarioContent.innerHTML = '<div class="empty-message">No tienes cartas en tu inventario</div>';
+                }
+                
+                // Mostrar mensaje de confirmación
+                alert('¡Perfil de prueba activado! Tienes 990 monedas y x10 de cada item/carta/pack.');
+                
+                // Guardar en localStorage para mantener la sesión
+                localStorage.setItem('jugador_Debug', JSON.stringify(jugadorActual));
+                
+                return;
             } else {
                 // Recuperar jugador de localStorage o crear nuevo
                 let jugador = JSON.parse(localStorage.getItem('jugador_' + nombre));
@@ -743,8 +912,20 @@
             document.getElementById('game-section').style.display = 'block';
             
             document.getElementById('player-name-display').textContent = jugadorActual.nombre;
-            actualizarMonedas();
-            mostrarInventario('cartas');
+            
+            // Usar las funciones existentes para usuarios normales
+            try {
+                actualizarMonedas();
+                mostrarInventario('cartas');
+            } catch (e) {
+                console.error("Error al mostrar inventario:", e);
+                // Fallback básico si las funciones fallan
+                document.getElementById('monedas-count').textContent = jugadorActual.monedas;
+            }
+            } catch (error) {
+                console.error("Error en login:", error);
+                alert("Error al iniciar sesión. Consulta la consola para más detalles.");
+            }
         }
 
         // Guardar jugador en localStorage
