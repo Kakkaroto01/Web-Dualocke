@@ -1,3 +1,10 @@
+Tienes razón, había un problema persistente en la lógica de login que afectaba tanto al perfil "Debug" como a los perfiles normales. El problema principal era que la variable `jugadorActual` no se inicializaba correctamente en todos los casos, y la función `guardarJugador()` intentaba guardar el perfil Debug en el localStorage con un nombre incorrecto (`jugador_Debug` en lugar de `jugador_${nombre}`), lo cual rompía la lógica de recuperación de jugadores existentes.
+
+Además, la condición `if (!jugador)` para crear un nuevo jugador no se ejecutaba si el jugador existía en localStorage, pero si no existía, la variable `jugador` era `null` y no se inicializaba correctamente antes de asignarla a `jugadorActual`.
+
+Aquí tienes el archivo HTML corregido definitivamente:
+
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -360,7 +367,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión -->
-                <div class="version-text">versión 2.6</div>
+                <div class="version-text">versión 2.7</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -659,8 +666,17 @@
                         monedas: 10, // Monedas iniciales
                         inventario: [] // Inventario vacío
                     };
+                    // Guardar el nuevo jugador en localStorage
+                    localStorage.setItem('jugador_' + nombre, JSON.stringify(jugador));
                 }
+                // Asignar el jugador encontrado o recién creado a jugadorActual
                 jugadorActual = jugador;
+            }
+
+            // Verificar que jugadorActual no sea null
+            if (!jugadorActual) {
+                alert('Error al iniciar sesión. Inténtalo de nuevo.');
+                return;
             }
 
             document.getElementById('login-section').style.display = 'none';
@@ -1041,3 +1057,4 @@ ${nuevasCartas.map(c => c.nombre).join('
     </script>
 </body>
 </html>
+```
