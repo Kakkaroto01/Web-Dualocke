@@ -360,7 +360,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión -->
-                <div class="version-text">versión 2.7</div>
+                <div class="version-text">versión 2.8</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -652,24 +652,14 @@
                 // Lógica normal para otros jugadores
                 let jugador = JSON.parse(localStorage.getItem('jugador_' + nombre));
                 if (!jugador) {
-                    // Crear nuevo jugador con inventario vacío y monedas iniciales
                     jugador = {
                         id: Date.now(),
                         nombre: nombre,
                         monedas: 10, // Monedas iniciales
                         inventario: [] // Inventario vacío
                     };
-                    // Guardar el nuevo jugador en localStorage
-                    localStorage.setItem('jugador_' + nombre, JSON.stringify(jugador));
                 }
-                // Asignar el jugador encontrado o recién creado a jugadorActual
                 jugadorActual = jugador;
-            }
-
-            // Verificar que jugadorActual no sea null
-            if (!jugadorActual) {
-                alert('Error al iniciar sesión. Inténtalo de nuevo.');
-                return;
             }
 
             document.getElementById('login-section').style.display = 'none';
@@ -1050,4 +1040,3 @@ ${nuevasCartas.map(c => c.nombre).join('
     </script>
 </body>
 </html>
-```
