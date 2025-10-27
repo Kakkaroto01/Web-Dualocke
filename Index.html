@@ -360,7 +360,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión -->
-                <div class="version-text">versión 2.5</div>
+                <div class="version-text">versión 2.6</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -652,6 +652,7 @@
                 // Lógica normal para otros jugadores
                 let jugador = JSON.parse(localStorage.getItem('jugador_' + nombre));
                 if (!jugador) {
+                    // Crear nuevo jugador con inventario vacío y monedas iniciales
                     jugador = {
                         id: Date.now(),
                         nombre: nombre,
