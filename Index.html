@@ -416,7 +416,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión -->
-                <div class="version-text" onclick="activarModoPruebas()">versión 2.4</div>
+                <div class="version-text">versión 2.4</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -1118,59 +1118,6 @@
                 }
             }
         }
-    
-/* --- NUEVA FUNCIÓN PARA MODO PRUEBAS --- */
-function activarModoPruebas() {
-    const nombre = "TestUser";
-    const jugadorPrueba = {
-        id: "test_001",
-        nombre: nombre,
-        monedas: 990,
-        inventario: []
-    };
-
-    // Agregar todas las cartas x10
-    cartas.forEach(carta => {
-        jugadorPrueba.inventario.push({
-            tipo_item: 'cartas',
-            item_id: carta.id,
-            cantidad: 10
-        });
-    });
-
-    // Agregar todos los objetos x10
-    objetos.forEach(obj => {
-        jugadorPrueba.inventario.push({
-            tipo_item: 'objetos',
-            item_id: obj.id,
-            cantidad: 10
-        });
-    });
-
-    // Agregar todos los sobres x10
-    sobres.forEach(sobre => {
-        jugadorPrueba.inventario.push({
-            tipo_item: 'sobres',
-            item_id: sobre.id,
-            cantidad: 10
-        });
-    });
-
-    jugadorActual = jugadorPrueba;
-    localStorage.setItem('jugador_' + nombre, JSON.stringify(jugadorPrueba));
-
-    // Mostrar la interfaz principal
-    document.getElementById('login-section').style.display = 'none';
-    document.getElementById('game-section').style.display = 'block';
-    document.getElementById('player-name-display').textContent = jugadorPrueba.nombre;
-    actualizarMonedas();
-    mostrarInventario('cartas');
-
-    alert("Modo pruebas activado.
-Jugador: TestUser
-990 monedas y todos los ítems x10.");
-}
-
-</script>
+    </script>
 </body>
 </html>
