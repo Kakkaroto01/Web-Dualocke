@@ -259,10 +259,9 @@
             color: #aaa;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             cursor: pointer; /* Hace que el texto sea clickeable */
-            text-decoration: underline; /* Opcional: subrayado para indicar clickeabilidad */
         }
         .version-text:hover {
-            color: #ffcb05; /* Cambia el color al pasar el mouse */
+             color: #ffcb05; /* Cambia el color al pasar el mouse */
         }
         /* Estilo específico para la ruleta */
         .ruleta-container {
@@ -365,7 +364,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión ahora es clickeable -->
-                <div class="version-text" onclick="iniciarSesionDebug()">versión 2.7</div>
+                <div class="version-text" onclick="iniciarSesionDebug()">versión 2.8</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -652,40 +651,24 @@
             mostrarInventario('cartas');
         }
 
-        // Login de jugador (función original restaurada y ligeramente adaptada para cargar Debug si existe)
+        // Login de jugador (función original restaurada)
         function login() {
             const nombre = document.getElementById('player-name').value.trim();
             if (!nombre) {
                 alert('Por favor ingresa tu nombre de entrenador');
                 return;
             }
-
-            // Verificar si el nombre es "Debug" y si ya existe en localStorage
-            if (nombre.toLowerCase() === "debug") {
-                const jugadorDebugGuardado = JSON.parse(localStorage.getItem('jugador_Debug'));
-                if (jugadorDebugGuardado) {
-                    // Cargar el perfil Debug existente
-                    jugadorActual = jugadorDebugGuardado;
-                    console.log("Perfil Debug cargado desde localStorage.");
-                } else {
-                    // Si no existe, crearlo (esto sobreescribe el guardado anterior si hubiera)
-                    iniciarSesionDebug();
-                    return; // Salir para evitar mostrar inventario dos veces
-                }
-            } else {
-                // Recuperar jugador normal de localStorage o crear nuevo
-                let jugador = JSON.parse(localStorage.getItem('jugador_' + nombre));
-                if (!jugador) {
-                    jugador = {
-                        id: Date.now(),
-                        nombre: nombre,
-                        monedas: 10, // Monedas iniciales
-                        inventario: [] // Inventario vacío
-                    };
-                }
-                jugadorActual = jugador;
+            // Recuperar jugador de localStorage o crear nuevo
+            let jugador = JSON.parse(localStorage.getItem('jugador_' + nombre));
+            if (!jugador) {
+                jugador = {
+                    id: Date.now(),
+                    nombre: nombre,
+                    monedas: 10, // Monedas iniciales
+                    inventario: [] // Inventario vacío
+                };
             }
-
+            jugadorActual = jugador;
             document.getElementById('login-section').style.display = 'none';
             document.getElementById('game-section').style.display = 'block';
             document.getElementById('player-name-display').textContent = jugadorActual.nombre;
