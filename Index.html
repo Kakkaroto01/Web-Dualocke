@@ -365,7 +365,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión ahora es clickeable -->
-                <div class="version-text" onclick="iniciarSesionDebug()">versión 2.6</div>
+                <div class="version-text" onclick="iniciarSesionDebug()">versión 2.7</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -640,9 +640,9 @@
                 });
             });
 
-            // Guarda el perfil Debug en localStorage para persistencia
+            // Guarda el perfil Debug en localStorage con una clave específica
             localStorage.setItem('jugador_Debug', JSON.stringify(jugadorActual));
-            console.log("Perfil Debug inicializado y guardado.");
+            console.log("Perfil Debug inicializado y guardado en localStorage.");
 
             // Actualiza la interfaz para mostrar el perfil Debug
             document.getElementById('login-section').style.display = 'none';
@@ -652,24 +652,40 @@
             mostrarInventario('cartas');
         }
 
-        // Login de jugador (función original restaurada)
+        // Login de jugador (función original restaurada y ligeramente adaptada para cargar Debug si existe)
         function login() {
             const nombre = document.getElementById('player-name').value.trim();
             if (!nombre) {
                 alert('Por favor ingresa tu nombre de entrenador');
                 return;
             }
-            // Recuperar jugador de localStorage o crear nuevo
-            let jugador = JSON.parse(localStorage.getItem('jugador_' + nombre));
-            if (!jugador) {
-                jugador = {
-                    id: Date.now(),
-                    nombre: nombre,
-                    monedas: 10, // Monedas iniciales
-                    inventario: [] // Inventario vacío
-                };
+
+            // Verificar si el nombre es "Debug" y si ya existe en localStorage
+            if (nombre.toLowerCase() === "debug") {
+                const jugadorDebugGuardado = JSON.parse(localStorage.getItem('jugador_Debug'));
+                if (jugadorDebugGuardado) {
+                    // Cargar el perfil Debug existente
+                    jugadorActual = jugadorDebugGuardado;
+                    console.log("Perfil Debug cargado desde localStorage.");
+                } else {
+                    // Si no existe, crearlo (esto sobreescribe el guardado anterior si hubiera)
+                    iniciarSesionDebug();
+                    return; // Salir para evitar mostrar inventario dos veces
+                }
+            } else {
+                // Recuperar jugador normal de localStorage o crear nuevo
+                let jugador = JSON.parse(localStorage.getItem('jugador_' + nombre));
+                if (!jugador) {
+                    jugador = {
+                        id: Date.now(),
+                        nombre: nombre,
+                        monedas: 10, // Monedas iniciales
+                        inventario: [] // Inventario vacío
+                    };
+                }
+                jugadorActual = jugador;
             }
-            jugadorActual = jugador;
+
             document.getElementById('login-section').style.display = 'none';
             document.getElementById('game-section').style.display = 'block';
             document.getElementById('player-name-display').textContent = jugadorActual.nombre;
@@ -678,8 +694,14 @@
         }
         // Guardar jugador en localStorage
         function guardarJugador() {
-            // Guarda el jugador actual, ya sea normal o Debug (si se ha logueado como Debug)
-            localStorage.setItem('jugador_' + jugadorActual.nombre, JSON.stringify(jugadorActual));
+            // Si el jugador actual es "Debug", se guarda con la clave específica
+            if (jugadorActual && jugadorActual.nombre.toLowerCase() === "debug") {
+                 localStorage.setItem('jugador_Debug', JSON.stringify(jugadorActual));
+                 console.log("Perfil Debug guardado en localStorage.");
+            } else if (jugadorActual && jugadorActual.nombre) {
+                // Para cualquier otro jugador, se guarda con su nombre
+                localStorage.setItem('jugador_' + jugadorActual.nombre, JSON.stringify(jugadorActual));
+            }
         }
         // Actualizar monedas en pantalla
         function actualizarMonedas() {
