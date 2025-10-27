@@ -360,7 +360,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión -->
-                <div class="version-text">versión 2.8</div>
+                <div class="version-text">versión 2.9</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -649,7 +649,7 @@
 
                 jugadorActual = jugadorDebug;
             } else {
-                // Lógica normal para otros jugadores
+                // Recuperar jugador de localStorage o crear nuevo (lógica original)
                 let jugador = JSON.parse(localStorage.getItem('jugador_' + nombre));
                 if (!jugador) {
                     jugador = {
