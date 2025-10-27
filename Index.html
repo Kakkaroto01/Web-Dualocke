@@ -415,8 +415,8 @@
             <div class="login-form">
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
-                <!-- Texto de versión -->
-                <div class="version-text">versión 2.4</div>
+                <!-- Texto de versión clickable para activar perfil de prueba -->
+                <div class="version-text" onclick="activarPerfilPrueba()" style="cursor: pointer;">versión 2.5</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -669,6 +669,51 @@
         // Jugador actual
         let jugadorActual = null;
 
+        // Función para crear perfil de prueba
+        function crearPerfilPrueba() {
+            // Crear perfil con 990 monedas
+            let perfilPrueba = {
+                id: Date.now(),
+                nombre: "Debug",
+                monedas: 990, // 990 monedas para pruebas
+                inventario: []
+            };
+            
+            // Añadir 10 de cada item/carta/pack al inventario
+            const todosItems = [
+                ...itemsDisponibles.map(item => ({...item, tipo: 'items'})),
+                ...cartasDisponibles.map(carta => ({...carta, tipo: 'cartas'})),
+                ...packsDisponibles.map(pack => ({...pack, tipo: 'packs'}))
+            ];
+            
+            todosItems.forEach(item => {
+                perfilPrueba.inventario.push({
+                    id: item.id,
+                    nombre: item.nombre,
+                    tipo: item.tipo,
+                    cantidad: 10, // 10 unidades de cada item
+                    precio: item.precio
+                });
+            });
+            
+            return perfilPrueba;
+        }
+        
+        // Función para activar el perfil de prueba al hacer clic en la versión
+        function activarPerfilPrueba() {
+            jugadorActual = crearPerfilPrueba();
+            
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('game-section').style.display = 'block';
+            
+            document.getElementById('player-name-display').textContent = jugadorActual.nombre;
+            actualizarMonedas();
+            mostrarInventario('cartas');
+            
+            // Mostrar mensaje de confirmación
+            alert('¡Perfil de prueba activado! Tienes 990 monedas y x10 de cada item/carta/pack.');
+        }
+        
         // Login de jugador
         function login() {
             const nombre = document.getElementById('player-name').value.trim();
@@ -676,19 +721,23 @@
                 alert('Por favor ingresa tu nombre de entrenador');
                 return;
             }
-
-            // Recuperar jugador de localStorage o crear nuevo
-            let jugador = JSON.parse(localStorage.getItem('jugador_' + nombre));
-            if (!jugador) {
-                jugador = {
-                    id: Date.now(),
-                    nombre: nombre,
-                    monedas: 10, // Monedas iniciales
-                    inventario: [] // Inventario vacío
-                };
+            
+            // Verificar si es el perfil de prueba "Debug"
+            if (nombre === "Debug") {
+                jugadorActual = crearPerfilPrueba();
+            } else {
+                // Recuperar jugador de localStorage o crear nuevo
+                let jugador = JSON.parse(localStorage.getItem('jugador_' + nombre));
+                if (!jugador) {
+                    jugador = {
+                        id: Date.now(),
+                        nombre: nombre,
+                        monedas: 10, // Monedas iniciales
+                        inventario: [] // Inventario vacío
+                    };
+                }
+                jugadorActual = jugador;
             }
-
-            jugadorActual = jugador;
             
             document.getElementById('login-section').style.display = 'none';
             document.getElementById('game-section').style.display = 'block';
