@@ -416,7 +416,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión -->
-                <div class="version-text">versión 3.3</div>
+                <div class="version-text">versión 3.4</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -507,7 +507,7 @@
             { id: 19, nombre: "7 Tirada a la rule", tipo: "E" },
             { id: 20, nombre: "Revive un pokemon", tipo: "E" },
             { id: 21, nombre: "Obliga a tu rival a retar al líder con 1 pokemon menos", tipo: "E" },
-            { id: 22, nombre: "Obtén entre 0 y 20 de oro", tipo: "E" },
+            { id: 22, nombre: "Obtén entre 5 y 20 de oro", tipo: "E" },
             { id: 23, nombre: "Duelo 1v1 contra rival si ganas obten 10 oro si pierdes 5", tipo: "E" },
             { id: 24, nombre: "Capturar otro pokemon de ruta extra", tipo: "E" },
             
@@ -882,8 +882,8 @@
                             oroGanado = Math.floor(Math.random() * 3) + 9; // 9, 10 o 11
                         } else if (carta.nombre.includes("Oro +15/16/17")) {
                             oroGanado = Math.floor(Math.random() * 3) + 15; // 15, 16 o 17
-                        } else if (carta.nombre.includes("Obtén entre 0 y 20 de oro")) {
-                            oroGanado = Math.floor(Math.random() * 21); // 0 a 20
+                        } else if (carta.nombre.includes("Obtén entre 5 y 20 de oro")) {
+                            oroGanado = Math.floor(Math.random() * 16) + 5; // 5 a 20
                         } else if (carta.nombre === "Desafia al lider con un pokemon menos a cambio de 10 oro") {
                             oroGanado = 10; // Carta especial que da 10 oro
                         }
