@@ -416,7 +416,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión -->
-                <div class="version-text">versión 2.4</div>
+                <div class="version-text">versión 3</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -481,59 +481,52 @@
     <script>
         // Datos actualizados
         const cartas = [
-            // Ataque
-            { id: 1, nombre: "Impides a tu rival capturar ese pokemon", tipo: "E" },
-            { id: 2, nombre: "Obligas a tu rival a cambiar de pokemon de ruta", tipo: "R" },
-            { id: 3, nombre: "Libera un pokemon usado en ese gym para matar un pokemon del rival", tipo: "E" },
-            { id: 4, nombre: "Matar un pokemon usado en ese gym para liberar un pokemon del rival", tipo: "L" },
-            { id: 5, nombre: "Intercambia un pokemon de tu equipo con uno de tu rival", tipo: "E" },
-            { id: 6, nombre: "Roba un pokemon", tipo: "L" },
-            // Defensa
-            { id: 7, nombre: "Relincho", tipo: "E" },
-            // Bonus - Oro
-            { id: 8, nombre: "Oro +1/2", tipo: "C" },
+            // Cartas Comunes
+            { id: 1, nombre: "Oro +1/2", tipo: "C" },
+            { id: 2, nombre: "Ganas una poti", tipo: "C" },
+            { id: 3, nombre: "Ganas una superpoti", tipo: "C" },
+            { id: 4, nombre: "Ganas una hiperpoti", tipo: "C" },
+            { id: 5, nombre: "Ambos jugadores pueden comprar una poti", tipo: "C" },
+            { id: 6, nombre: "1 Tirada a la rule", tipo: "C" },
+            { id: 7, nombre: "Ambos jugadores tiran de la ruleta si obtienes una recompensa mejor tira otra vez", tipo: "C" },
+            
+            // Cartas Raras
+            { id: 8, nombre: "Obligas a tu rival a cambiar de pokemon de ruta", tipo: "R" },
             { id: 9, nombre: "Oro +4/5", tipo: "R" },
-            { id: 10, nombre: "Oro +9/10/11", tipo: "E" },
-            { id: 11, nombre: "Oro +15/16/17", tipo: "L" },
-            // Bonus - Rule
-            { id: 12, nombre: "Rule (R)", tipo: "R" },
-            { id: 13, nombre: "Rule (E)", tipo: "E" },
-            { id: 14, nombre: "Rule (L)", tipo: "L" },
-            // Bonus - Otros
-            { id: 15, nombre: "Liberas un Pokémon para revivir otro", tipo: "R" },
-            // Otro
-            { id: 16, nombre: "Revive un pokemon", tipo: "E" },
-            { id: 17, nombre: "Libera un pokemon para revivir otro pokemon", tipo: "R" },
-            { id: 18, nombre: "Capturar otro pokemon de ruta extra", tipo: "R" },
-            { id: 19, nombre: "Cambiar de pokemon de ruta", tipo: "C" },
-            { id: 20, nombre: "Ganas una poti", tipo: "C" },
-            { id: 21, nombre: "Ganas una superpoti", tipo: "C" },
-            { id: 22, nombre: "Gana un totem de inmortalidad(objeto random)", tipo: "R" },
-            { id: 23, nombre: "Puedes comprar cualquier objeto curativo", tipo: "R" },
-            { id: 24, nombre: "3 Puedes comprar cualquier objeto curativo", tipo: "E" },
-            { id: 25, nombre: "Ambos jugadores pueden comprar una poti", tipo: "C" },
-            { id: 26, nombre: "Haz un pokemon shiny", tipo: "R" },
-            { id: 27, nombre: "Cambia la naturaleza de un pokemon", tipo: "R" },
-            { id: 28, nombre: "Intercambia las habilidades de 2 de tus pokemon", tipo: "L" },
-            { id: 29, nombre: "Pon a 31 IV's 1 estadística", tipo: "E" },
-            { id: 30, nombre: "Libera un Pokémon por cada 2 estadísticas que quieras a 31 IV's", tipo: "E" },
-            { id: 31, nombre: "Obtienes una masterball", tipo: "E" },
-            { id: 32, nombre: "Robas 2 objetos curativos del rival", tipo: "R" },
-            { id: 33, nombre: "Obliga a tu rival a retar al líder con 1 pokemon menos", tipo: "E" },
-            { id: 34, nombre: "Libera un shiny por 10 monedas", tipo: "R" },
-            { id: 35, nombre: "Obtén entre 0 y 20 de oro", tipo: "E" },
-            { id: 36, nombre: "Si tu inicial no ha participado y no ha muerto en los 4 primeros gym 31 IV's en todo", tipo: "R" },
-            { id: 37, nombre: "Consigue un item competitivo aleatorio", tipo: "E" },
-            { id: 38, nombre: "Puedes subir a 31 IV's una estadística a un shiny", tipo: "R" },
-            { id: 39, nombre: "Consigue un item competitivo de tu elección", tipo: "L" }
+            { id: 10, nombre: "3 Tirada a la rule", tipo: "R" },
+            { id: 11, nombre: "Liberar un Pokémon para revivir otro", tipo: "R" },
+            { id: 12, nombre: "Puedes comprar cualquier objeto curativo", tipo: "R" },
+            { id: 13, nombre: "Robas 2 objetos curativos del rival", tipo: "R" },
+            { id: 14, nombre: "Cambiar de pokemon de ruta", tipo: "R" },
+            { id: 15, nombre: "Desafia al lider con un pokemon menos a cambio de 10 oro", tipo: "R", accion: "sumarOro", cantidad: 10 },
+            { id: 16, nombre: "Duelo 1v1, 3 tiradas de rule para el ganador", tipo: "R" },
+            
+            // Cartas Épicas
+            { id: 17, nombre: "Libera un pokemon usado en ese gym para matar un pokemon del rival", tipo: "E" },
+            { id: 18, nombre: "Oro +9/10/11", tipo: "E" },
+            { id: 19, nombre: "7 Tirada a la rule", tipo: "E" },
+            { id: 20, nombre: "Revive un pokemon", tipo: "E" },
+            { id: 21, nombre: "Obliga a tu rival a retar al líder con 1 pokemon menos", tipo: "E" },
+            { id: 22, nombre: "Obtén entre 0 y 20 de oro", tipo: "E" },
+            { id: 23, nombre: "Duelo 1v1 contra rival si ganas obten 10 oro si pierdes 5", tipo: "E" },
+            { id: 24, nombre: "Capturar otro pokemon de ruta extra", tipo: "E" },
+            
+            // Cartas Legendarias
+            { id: 25, nombre: "Impides a tu rival capturar ese pokemon", tipo: "L" },
+            { id: 26, nombre: "Oro +15/16/17", tipo: "L" },
+            { id: 27, nombre: "12 Tirada a la rule", tipo: "L" },
+            { id: 28, nombre: "Matar un pokemon usado en ese gym para liberar un pokemon del rival", tipo: "L" },
+            { id: 29, nombre: "Tu rival tiene -2 al /level cap del siguiente gym", tipo: "L" },
+            { id: 30, nombre: "Tienes +2 al /level cap del siguiente gym", tipo: "L" },
+            { id: 31, nombre: "Objeto +15 de oro a elección", tipo: "L" }
         ];
 
         const sobres = [
-            { id: 1, nombre: "Sobre común", cartas: 2, probabilidades: { C: 80, R: 15, E: 4, L: 1 }, precio: 5 },
-            { id: 2, nombre: "Sobre raro", cartas: 3, probabilidades: { C: 50, R: 35, E: 10, L: 5 }, precio: 10 },
-            { id: 3, nombre: "Sobre épico", cartas: 3, probabilidades: { C: 20, R: 50, E: 20, L: 10 }, precio: 15 },
-            { id: 4, nombre: "Sobre legendario", cartas: 2, contenido: ["L", "E"], precio: 20 },
-            { id: 5, nombre: "Sobre gym", cartas: 2, probabilidades: { C: 65, R: 25, E: 7, L: 3 }, precio: 0 }
+            { id: 1, nombre: "Sobre común", cartas: 2, probabilidades: { C: 80, R: 18, E: 1.6, L: 0.4 }, precio: 5 },
+            { id: 2, nombre: "Sobre raro", cartas: 3, probabilidades: { C: 55, R: 38.5, E: 5.5, L: 1 }, precio: 15 },
+            { id: 3, nombre: "Sobre épico", cartas: 3, probabilidades: { C: 15, R: 43, E: 37, L: 5 }, precio: 25 },
+            { id: 4, nombre: "Sobre legendario", cartas: 1, probabilidades: { C: 0, R: 0, E: 0, L: 100 }, precio: 30 },
+            { id: 5, nombre: "Sobre gym", cartas: 1, probabilidades: { C: 30, R: 40, E: 20, L: 10 }, precio: 0 }
         ];
 
         // Objetos sin "Botas gruesas"
@@ -544,6 +537,9 @@
             { id: 3, nombre: "Hyperpoti", tipo: "curativo", precio: 4 },
             { id: 4, nombre: "Restaurar todito", tipo: "curativo", precio: 5 },
             { id: 5, nombre: "Cura total", tipo: "curativo", precio: 3 },
+            // Especiales
+            { id: 21, nombre: "Tirada Ruleta", tipo: "especial", precio: 3, imagen: "🎰" },
+            { id: 22, nombre: "Oro emergencias", tipo: "especial", precio: 0, imagen: "💰", accion: "sumarOro", cantidad: 1 },
             // Competitivos
             { id: 6, nombre: "Restos", tipo: "competitivo", precio: 15 },
             { id: 7, nombre: "Vidasfera", tipo: "competitivo", precio: 15 },
@@ -569,66 +565,41 @@
 
         // Configuración de la Ruleta
         const ruletaConfig = [
-            // 13 vacíos
-            { tipo: 'vacio', descripcion: 'Nada' },
-            { tipo: 'vacio', descripcion: 'Nada' },
-            { tipo: 'vacio', descripcion: 'Nada' },
-            { tipo: 'vacio', descripcion: 'Nada' },
-            { tipo: 'vacio', descripcion: 'Nada' },
-            { tipo: 'vacio', descripcion: 'Nada' },
-            { tipo: 'vacio', descripcion: 'Nada' },
-            { tipo: 'vacio', descripcion: 'Nada' },
-            { tipo: 'vacio', descripcion: 'Nada' },
-            { tipo: 'vacio', descripcion: 'Nada' },
-            { tipo: 'vacio', descripcion: 'Nada' },
-            { tipo: 'vacio', descripcion: 'Nada' },
-            { tipo: 'vacio', descripcion: 'Nada' },
-            // 10 +1 oro
-            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
-            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
-            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
-            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
-            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
-            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
-            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
-            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
-            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
-            { tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' },
-            // 5 +3 oro
-            { tipo: 'oro', cantidad: 3, descripcion: '+3 Oro' },
-            { tipo: 'oro', cantidad: 3, descripcion: '+3 Oro' },
-            { tipo: 'oro', cantidad: 3, descripcion: '+3 Oro' },
-            { tipo: 'oro', cantidad: 3, descripcion: '+3 Oro' },
-            { tipo: 'oro', cantidad: 3, descripcion: '+3 Oro' },
-            // 5 +5 oro
-            { tipo: 'oro', cantidad: 5, descripcion: '+5 Oro' },
-            { tipo: 'oro', cantidad: 5, descripcion: '+5 Oro' },
-            { tipo: 'oro', cantidad: 5, descripcion: '+5 Oro' },
-            { tipo: 'oro', cantidad: 5, descripcion: '+5 Oro' },
-            { tipo: 'oro', cantidad: 5, descripcion: '+5 Oro' },
-            // 2 +7 oro
-            { tipo: 'oro', cantidad: 7, descripcion: '+7 Oro' },
-            { tipo: 'oro', cantidad: 7, descripcion: '+7 Oro' },
-            // 5 sobres comunes
-            { tipo: 'sobre', id: 1, descripcion: 'Sobre Común' },
-            { tipo: 'sobre', id: 1, descripcion: 'Sobre Común' },
-            { tipo: 'sobre', id: 1, descripcion: 'Sobre Común' },
-            { tipo: 'sobre', id: 1, descripcion: 'Sobre Común' },
-            { tipo: 'sobre', id: 1, descripcion: 'Sobre Común' },
-            // 5 sobres raros
-            { tipo: 'sobre', id: 2, descripcion: 'Sobre Raro' },
-            { tipo: 'sobre', id: 2, descripcion: 'Sobre Raro' },
-            { tipo: 'sobre', id: 2, descripcion: 'Sobre Raro' },
-            { tipo: 'sobre', id: 2, descripcion: 'Sobre Raro' },
-            { tipo: 'sobre', id: 2, descripcion: 'Sobre Raro' },
-            // 3 sobres épicos
-            { tipo: 'sobre', id: 3, descripcion: 'Sobre Épico' },
-            { tipo: 'sobre', id: 3, descripcion: 'Sobre Épico' },
-            { tipo: 'sobre', id: 3, descripcion: 'Sobre Épico' },
-            // 1 sobre legendario
+            // 50% Nada (90 entradas)
+            ...Array(90).fill({ tipo: 'vacio', descripcion: 'Nada' }),
+            
+            // 12.2222% +1 oro (22 entradas)
+            ...Array(22).fill({ tipo: 'oro', cantidad: 1, descripcion: '+1 Oro' }),
+            
+            // 10% +2 oro (18 entradas)
+            ...Array(18).fill({ tipo: 'oro', cantidad: 2, descripcion: '+2 Oro' }),
+            
+            // 7.2222% +3 oro (13 entradas)
+            ...Array(13).fill({ tipo: 'oro', cantidad: 3, descripcion: '+3 Oro' }),
+            
+            // 3.8889% +5 oro (7 entradas)
+            ...Array(7).fill({ tipo: 'oro', cantidad: 5, descripcion: '+5 Oro' }),
+            
+            // 3.3333% +7 oro (6 entradas)
+            ...Array(6).fill({ tipo: 'oro', cantidad: 7, descripcion: '+7 Oro' }),
+            
+            // 1.1111% +10 oro (2 entradas)
+            ...Array(2).fill({ tipo: 'oro', cantidad: 10, descripcion: '+10 Oro' }),
+            
+            // 5.5556% Sobre Común (10 entradas)
+            ...Array(10).fill({ tipo: 'sobre', id: 1, descripcion: 'Sobre Común' }),
+            
+            // 3.3333% Sobre Raro (6 entradas)
+            ...Array(6).fill({ tipo: 'sobre', id: 2, descripcion: 'Sobre Raro' }),
+            
+            // 1.1111% Sobre Épico (2 entradas)
+            ...Array(2).fill({ tipo: 'sobre', id: 3, descripcion: 'Sobre Épico' }),
+            
+            // 0.5556% Sobre Legendario (1 entrada)
             { tipo: 'sobre', id: 4, descripcion: 'Sobre Legendario' },
-            // 1 objeto aleatorio (15 o más)
-            { tipo: 'objeto_aleatorio', descripcion: 'Objeto Aleatorio (15+)' }
+            
+            // 1.6667% Objeto Aleatorio (15+) (3 entradas)
+            ...Array(3).fill({ tipo: 'objeto_aleatorio', descripcion: 'Objeto Aleatorio (15+)' })
         ];
 
         // Función para obtener la URL de la imagen de un objeto
@@ -913,6 +884,8 @@
                             oroGanado = Math.floor(Math.random() * 3) + 15; // 15, 16 o 17
                         } else if (carta.nombre.includes("Obtén entre 0 y 20 de oro")) {
                             oroGanado = Math.floor(Math.random() * 21); // 0 a 20
+                        } else if (carta.nombre === "Desafia al lider con un pokemon menos a cambio de 10 oro") {
+                            oroGanado = 10; // Carta especial que da 10 oro
                         }
                         jugadorActual.monedas += oroGanado;
                         alert(`¡Has usado la carta "${carta.nombre}" y ganaste ${oroGanado} monedas!`);
@@ -922,6 +895,14 @@
                         alert(`¡Has usado la carta "${carta.nombre}" y ganaste 5 monedas!`);
                     } else {
                         alert(`¡Has usado la carta "${carta.nombre}"! (Efecto no implementado en la interfaz)`);
+                    }
+                } else if (tipo === 'especial') {
+                    const objeto = objetos.find(o => o.id === itemId);
+                    if (objeto && objeto.accion === 'sumarOro' && objeto.cantidad) {
+                        jugadorActual.monedas += objeto.cantidad;
+                        alert(`¡Has usado "${objeto.nombre}" y has ganado ${objeto.cantidad} monedas!`);
+                    } else {
+                        alert(`¡Has usado "${objeto.nombre}"!`);
                     }
                 } else {
                     alert('¡Item usado correctamente!');
