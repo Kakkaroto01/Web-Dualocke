@@ -416,7 +416,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión -->
-                <div class="version-text">versión 3</div>
+                <div class="version-text">versión 3.2</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -896,16 +896,16 @@
                     } else {
                         alert(`¡Has usado la carta "${carta.nombre}"! (Efecto no implementado en la interfaz)`);
                     }
-                } else if (tipo === 'especial') {
-                    const objeto = objetos.find(o => o.id === itemId);
-                    if (objeto && objeto.accion === 'sumarOro' && objeto.cantidad) {
-                        jugadorActual.monedas += objeto.cantidad;
-                        alert(`¡Has usado "${objeto.nombre}" y has ganado ${objeto.cantidad} monedas!`);
-                    } else {
-                        alert(`¡Has usado "${objeto.nombre}"!`);
-                    }
                 } else {
-                    alert('¡Item usado correctamente!');
+                    // Lógica para objetos comprados en tienda
+                    const objeto = objetos.find(o => o.id === itemId);
+                    if (objeto && objeto.accion === 'sumarOro') {
+                        const cantidad = (typeof objeto.cantidad === 'number' ? objeto.cantidad : 1);
+                        jugadorActual.monedas += cantidad;
+                        alert(`¡Has usado "${objeto.nombre}" y has ganado ${cantidad} monedas!`);
+                    } else {
+                        alert('¡Item usado correctamente!');
+                    }
                 }
                 
                 guardarJugador();
@@ -938,7 +938,7 @@
             objetos.forEach(objeto => {
                 html += `
                 <div class="item-card">
-                    <div class="item-image"><img src="${getObjetoImageUrl(objeto.nombre)}" alt="${objeto.nombre}" style="width: 100%; height: 100%; object-fit: contain;"></div>
+                    <div class="item-image">${objeto.imagen ? objeto.imagen : ('<img src="' + getObjetoImageUrl(objeto.nombre) + '" alt="' + objeto.nombre + '" style="width: 100%; height: 100%; object-fit: contain;">')}</div>
                     <div class="item-name">${objeto.nombre}</div>
                     <div class="item-quantity">${objeto.precio} <img src="https://static.wikia.nocookie.net/pokemongohelp/images/9/99/Pokecoin1.png/revision/latest?cb=20160923165335" width="16" height="16"> </div>
                     <button class="item-action" onclick="comprarItem('objetos', ${objeto.id})">Comprar</button>
