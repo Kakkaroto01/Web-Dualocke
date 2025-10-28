@@ -416,7 +416,7 @@
                 <!-- Imagen del logo -->
                 <img src="Duallocke.png" alt="Duallocke Logo" class="logo-img">
                 <!-- Texto de versión -->
-                <div class="version-text">versión 3.2</div>
+                <div class="version-text">versión 3.3</div>
                 <input type="text" id="player-name" class="login-input" placeholder="Ingresa tu nombre de entrenador">
                 <button class="login-btn" onclick="login()">¡Entrar al Juego!</button>
             </div>
@@ -971,6 +971,18 @@
 
             // Restar monedas
             jugadorActual.monedas -= precio;
+
+            // Efecto inmediato para objetos que suman oro al comprar (p.ej., Oro emergencias)
+            if (tipo === 'objetos' && item && item.accion === 'sumarOro') {
+                const cantidad = (typeof item.cantidad === 'number' ? item.cantidad : 1);
+                jugadorActual.monedas += cantidad;
+                guardarJugador();
+                actualizarMonedas();
+                // Actualizar vista de tienda
+                mostrarTienda();
+                alert(`¡Has comprado ${item.nombre} por ${precio} Pokecoins y ganaste ${cantidad} monedas!`);
+                return; // No se añade al inventario; el efecto es instantáneo
+            }
 
             // Añadir item al inventario
             const itemExistente = jugadorActual.inventario.find(i => 
